@@ -4,8 +4,12 @@
 
 ## Integrantes del equipo
 
-[Nombres, apellidos, y usuario GitHub de los integrantes del equipo.]
+luis gonzalo garcia ramos,lgonzalogr.
+IgnacioLorienteSantana 
+Alejandro
+Jesús
+[Nombres, apellidos y usuario GitHub de los integrantes del equipo.]
 
-## Objetivos del trabajo
+##Objetivos del trabajo
 
 [Lista de los objetivos que se persiguen con el trabajo propuesto.]

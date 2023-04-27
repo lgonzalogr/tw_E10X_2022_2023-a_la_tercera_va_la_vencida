@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1682587761 source:c:\users\aleja\documents\proyectos codeblocks\a_la_tercera_va_la_vencida\programa_principal.c
+	<stdio.h>
+	<stdlib.h>
+

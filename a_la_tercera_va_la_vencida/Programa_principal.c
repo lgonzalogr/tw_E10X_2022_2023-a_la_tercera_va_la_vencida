@@ -6,7 +6,7 @@ void menuprincipal(void);
 int main(){
     int eleccion;
 
-    while(eleccion!=4){
+    while(eleccion!=5){
         menuprincipal();
         scanf("%i",&eleccion);
         switch(eleccion){
@@ -37,5 +37,6 @@ void menuprincipal(void){
     printf("\t1.\tVer datos completos.\n");
     printf("\t2.\tBusqueda de datos.\n");
     printf("\t3.\tAñadir datos.\n");
-    printf("\t4.\tCerrar el programa.\n");
+    printf("\t4.\tEstadísticas del archivo.\n");
+    printf("\t5.\tCerrar el programa.\n");
 }

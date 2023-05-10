@@ -77,6 +77,14 @@ void mostrardatoscompletos(struct fila *nfilas, FILE *archivocompleto,int n){
 
 
 }
+    rewind(archivocompleto);
+    for(i=-2;i<n;i++){
+        fgets(nfilas[i].filascompletas,sizeof(nfilas[i].filascompletas),archivocompleto);
+
+		nfilas[i].filascompletas[strlen(nfilas[i].filascompletas)]='"';
+
+	nfilas[i].filascompletas[strlen(nfilas[i].filascompletas)-1]='\n';
+    }
 
 
 for(i=0;i<n;i++){

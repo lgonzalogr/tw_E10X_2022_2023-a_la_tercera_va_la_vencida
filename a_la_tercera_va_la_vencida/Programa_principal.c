@@ -18,13 +18,13 @@ int main(){
         scanf("%i",&eleccion);
         switch(eleccion){
     case 1:
-        printf("\n\n\t1.\tVer datos completos.\n");
+        printf("\n\n\t1.\tVer datos completos.\n"); // comprobacion
         archivocompleto=fopen("generacion.csv","r");
         while(!feof(archivocompleto)){ //Se cuenta el numero de filas
         c=fgetc(archivocompleto);
         if (c=='\n') n++;
         }
-        printf("El numero de filas es: %i\n",n);
+        printf("El numero de filas es: %i\n",n); // comprobacion
         nfilas=(struct fila*)malloc(n*sizeof(struct fila)); //Se asigan dimension n=23 al vector de estructuras nfilas
         rewind(archivocompleto);
         mostrardatoscompletos(nfilas,archivocompleto,n);
@@ -67,13 +67,14 @@ void menuprincipal(void){
 void mostrardatoscompletos(struct fila *nfilas, FILE *archivocompleto,int n){
     int i;
 
-    for(i=0;i<n;i++){
+    for(i=-2;i<n;i++){
 
 	fgets(nfilas[i].filascompletas,sizeof(nfilas[i].filascompletas),archivocompleto);
 
+		nfilas[i].filascompletas[strlen(nfilas[i].filascompletas)]='\0';
+
 	nfilas[i].filascompletas[strlen(nfilas[i].filascompletas)-1]=';';
 
-	nfilas[i].filascompletas[strlen(nfilas[i].filascompletas)]='\0';
 
 }
 

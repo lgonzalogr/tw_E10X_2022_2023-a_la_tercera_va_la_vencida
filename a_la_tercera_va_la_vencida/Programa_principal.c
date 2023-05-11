@@ -6,8 +6,10 @@ struct fila{
 };
 void menuprincipal(void);
 void mostrardatoscompletos(struct fila *, FILE *, int);
+void menubusqueda(void);
+void menubusquedafecha(struct fila *,FILE *);
 int main(){
-    int eleccion;
+    int eleccion,eleccionbusqueda;
     int i,j,n=0;
     char c;
     struct fila *nfilas; //Declaracion del puntero para reserva de memoria mas adelante
@@ -15,25 +17,35 @@ int main(){
 
     while(eleccion!=6){
         menuprincipal();
-        scanf("%i",&eleccion);
-        switch(eleccion){
-    case 1:
-        printf("\n\n\t1.\tVer datos completos.\n"); // comprobacion
-        archivocompleto=fopen("generacion.csv","r");
-        while(!feof(archivocompleto)){ //Se cuenta el numero de filas
-        c=fgetc(archivocompleto);
-        if (c=='\n') n++;
-        }
-        printf("El numero de filas es: %i\n",n); // comprobacion
-        nfilas=(struct fila*)malloc(n*sizeof(struct fila)); //Se asigan dimension n=23 al vector de estructuras nfilas
-        rewind(archivocompleto);
-        mostrardatoscompletos(nfilas,archivocompleto,n);
-        fclose(archivocompleto);
-        //mostrardatoscompletos(nfilas,archivocompleto,n);
-        break;
-    case 2:
-        printf("Seleccione el tipo de busqueda que desea:\n");
-        break;
+            scanf("%i",&eleccion);
+            switch(eleccion){
+                case 1:
+                printf("\n\n\t1.\tVer datos completos.\n"); // comprobacion
+                archivocompleto=fopen("generacion.csv","r");
+                    while(!feof(archivocompleto)){ //Se cuenta el numero de filas
+                        c=fgetc(archivocompleto);
+                        if (c=='\n') n++;
+                        }
+                        printf("El numero de filas es: %i\n",n); // comprobacion
+                        nfilas=(struct fila*)malloc(n*sizeof(struct fila)); //Se asigan dimension n=23 al vector de estructuras nfilas
+                        rewind(archivocompleto);
+                        mostrardatoscompletos(nfilas,archivocompleto,n);
+                        fclose(archivocompleto);
+
+                break;
+                case 2:
+                while(eleccionbusqueda!=4){
+                    printf("Seleccione el tipo de busqueda que desea:\n");
+                    menubusqueda();
+                    scanf("%i",&eleccionbusqueda);
+                    switch(eleccionbusqueda){
+                        case 1:
+                            menubusquedafecha(nfilas,archivocompleto);
+                    }
+
+
+                    }
+                break;
     case 3:
          printf("Seleccione los datos que desea añadir:\n");
         break;
@@ -93,3 +105,22 @@ for(i=0;i<n;i++){
 
 }
 }
+void menubusqueda(void){
+    printf("\t1.\tFecha.");
+    printf("\t2.\tEnergia.");
+    printf("\t3.\tFecha y energia.");
+    printf("\t4.\tVolver al menu.");
+}
+void menubusquedafecha(struct fila *filafechas,FILE *fechas){
+    fechas=fopen("generacion.csv","r");
+    int i;
+    for(i=0;i<=4;i++){
+        fgets(filafechas[i].filascompletas,sizeof(filafechas[i].filascompletas),fechas);
+    }
+    for(i=4;i<=4;i++){
+
+	printf ("%s\n",filafechas[i].filascompletas);
+    fclose(fechas);
+}
+}
+//void busquedafecha()

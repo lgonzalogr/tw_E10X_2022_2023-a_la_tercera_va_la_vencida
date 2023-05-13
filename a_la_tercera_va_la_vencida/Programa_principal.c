@@ -9,31 +9,38 @@ void menuprincipal(void);
 void mostrardatoscompletos(struct fila *, FILE *, int);
 void menubusqueda(void);
 void menubusquedafecha(struct fila *,FILE *);
+void cadenasindependientes(FILE *, int ,int ,char [][25]);
 int main(){
     int eleccion,eleccionbusqueda;
-    int ncomas=0;
-    int i=0,j,n=0;
+    int i=0,j,n=0,ncomas=0;
     char c,comas;
-
+    char datos[50][560];
     struct fila *nfilas; //Declaracion del puntero para reserva de memoria mas adelante
     FILE *archivocompleto; //Declaracion del archivo principal
 
     while(eleccion!=6){
         menuprincipal();
             scanf("%i",&eleccion);
-            switch(eleccion){
-                case 1:
-                printf("\n\n\t1.\tVer datos completos.\n"); // comprobacion
-                archivocompleto=fopen("generacion.csv","r");
+            archivocompleto=fopen("generacion.csv","r");
                     while(!feof(archivocompleto)){ //Se cuenta el numero de filas
                         c=fgetc(archivocompleto);
                         if (c=='\n') n++;
                         }
-
-                    printf("El numero de filas es: %i\n",n);
-                    // comprobacion
-                    nfilas=(struct fila*)malloc(n*sizeof(struct fila)); //Se asigan dimension n=23 al vector de estructuras nfilas
                     rewind(archivocompleto);
+                    while(!feof(archivocompleto)){ //Se cuenta el numero de filas
+                        comas=fgetc(archivocompleto);
+                        if (comas==',') ncomas++;
+                        }
+                    printf("El numero de filas es: %i\n",n);// comprobacion
+                    printf("El numero de comas es: %i\n",ncomas);
+                    printf("El numero de columnas es: %i\n",ncomas/23+1);
+                    nfilas=(struct fila*)malloc(n*sizeof(struct fila));
+                    fclose(archivocompleto);
+            switch(eleccion){
+                case 1:
+                printf("\n\n\t1.\tVer datos completos.\n"); // comprobacion
+                archivocompleto=fopen("generacion.csv","r");
+                    nfilas=(struct fila*)malloc(n*sizeof(struct fila)); //Se asigan dimension n=23 al vector de estructuras nfilas
                     mostrardatoscompletos(nfilas,archivocompleto,n);
                 fclose(archivocompleto);
 
@@ -46,7 +53,7 @@ int main(){
                     switch(eleccionbusqueda){
                         case 1:
                             menubusquedafecha(nfilas,archivocompleto);
-
+                            cadenasindependientes(archivocompleto,n,ncomas/23+1,datos);
                     }
 
 
@@ -130,3 +137,14 @@ void menubusquedafecha(struct fila *filafechas,FILE *fechas){
 }
 }
 //void busquedafecha()
+
+void cadenasindependientes(FILE *archivo, int filas,int columnas,char datosindependientes[][25]){
+    int i,j;
+    archivo=fopen("generacion.csv","r");
+    for(i=0;i<filas;i++){
+        for(j=0;j<columnas;j++){
+            fgets(datosindependientes[i][j],sizeof(datosindependientes),archivo);
+        }
+    }
+    fclose(archivo);
+}

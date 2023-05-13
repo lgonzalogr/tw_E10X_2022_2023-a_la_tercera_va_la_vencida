@@ -3,6 +3,7 @@
 #include<string.h>
 struct fila{
     char filascompletas[432];
+    char numero[100];
 };
 void menuprincipal(void);
 void mostrardatoscompletos(struct fila *, FILE *, int);
@@ -10,8 +11,10 @@ void menubusqueda(void);
 void menubusquedafecha(struct fila *,FILE *);
 int main(){
     int eleccion,eleccionbusqueda;
-    int i,j,n=0;
-    char c;
+    int ncomas=0;
+    int i=0,j,n=0;
+    char c,comas;
+
     struct fila *nfilas; //Declaracion del puntero para reserva de memoria mas adelante
     FILE *archivocompleto; //Declaracion del archivo principal
 
@@ -26,11 +29,13 @@ int main(){
                         c=fgetc(archivocompleto);
                         if (c=='\n') n++;
                         }
-                        printf("El numero de filas es: %i\n",n); // comprobacion
-                        nfilas=(struct fila*)malloc(n*sizeof(struct fila)); //Se asigan dimension n=23 al vector de estructuras nfilas
-                        rewind(archivocompleto);
-                        mostrardatoscompletos(nfilas,archivocompleto,n);
-                        fclose(archivocompleto);
+
+                    printf("El numero de filas es: %i\n",n);
+                    // comprobacion
+                    nfilas=(struct fila*)malloc(n*sizeof(struct fila)); //Se asigan dimension n=23 al vector de estructuras nfilas
+                    rewind(archivocompleto);
+                    mostrardatoscompletos(nfilas,archivocompleto,n);
+                fclose(archivocompleto);
 
                 break;
                 case 2:
@@ -41,6 +46,7 @@ int main(){
                     switch(eleccionbusqueda){
                         case 1:
                             menubusquedafecha(nfilas,archivocompleto);
+
                     }
 
 

@@ -6,6 +6,7 @@ struct fila{
     char numero[100];
 };
 void menuprincipal(void);
+void copiarArchivoModificado(const char* nombre_origen, const char* nombre_destino);
 void mostrardatoscompletos(struct fila *, FILE *, int);
 void menubusqueda(void);
 void menubusquedafecha(struct fila *,FILE *);
@@ -15,8 +16,10 @@ int main(){
     int i=0,j,n=0,ncomas=0;
     char c,comas;
     char datos[50][560];
+    char nombre_archivo_origen[100] = "generacion.csv";
+    char nombre_archivo_destino[100] = "copiabonita.txt";
     struct fila *nfilas; //Declaracion del puntero para reserva de memoria mas adelante
-    FILE *archivocompleto; //Declaracion del archivo principal
+    FILE *archivocompleto, copiabonita; //Declaracion del archivo principal
 
     while(eleccion!=6){
         menuprincipal();
@@ -37,14 +40,19 @@ int main(){
                     nfilas=(struct fila*)malloc(n*sizeof(struct fila));
                     fclose(archivocompleto);
             switch(eleccion){
+
+
+
+
                 case 1:
                 printf("\n\n\t1.\tVer datos completos.\n"); // comprobacion
-                archivocompleto=fopen("generacion.csv","r");
-                    nfilas=(struct fila*)malloc(n*sizeof(struct fila)); //Se asigan dimension n=23 al vector de estructuras nfilas
-                    mostrardatoscompletos(nfilas,archivocompleto,n);
-                fclose(archivocompleto);
-
+                copiarArchivoModificado(nombre_archivo_origen, nombre_archivo_destino);
+                mostrarDatosCompletos(nombre_archivo_destino);
                 break;
+
+
+
+
                 case 2:
                 while(eleccionbusqueda!=4){
                     printf("Seleccione el tipo de busqueda que desea:\n");
@@ -82,6 +90,57 @@ int main(){
     return 0;
 }
 
+
+void mostrarDatosCompletos(const char* nombre_archivo) {
+    FILE* archivo = fopen("copiabonita.txt", "r");
+
+    if (archivo == NULL) {
+        printf("No se pudo abrir el archivo.\n");
+        return;
+    }
+
+    char caracter;
+    printf("Contenido del archivo %s:\n", nombre_archivo);
+    while ((caracter = fgetc(archivo)) != EOF) {
+        printf("%c", caracter);
+    }
+
+    printf("\n");
+
+    fclose(archivo);
+}
+
+void copiarArchivoModificado(const char* nombre_origen, const char* nombre_destino) {
+    FILE *archivo_origen, *archivo_destino;
+    char caracter;
+
+    archivo_origen = fopen("generacion.csv", "r");
+    if (archivo_origen == NULL) {
+        printf("No se pudo abrir el archivo de origen.\n");
+        return;
+    }
+
+    archivo_destino = fopen(nombre_destino, "w");
+    if (archivo_destino == NULL) {
+        printf("No se pudo abrir el archivo de destino.\n");
+        return;
+    }
+
+    while ((caracter = fgetc(archivo_origen)) != EOF) {
+        if (caracter == ',' || caracter == ';'|| caracter == '"') {
+            fputc(' ', archivo_destino);
+        } else {
+            fputc(caracter, archivo_destino);
+        }
+    }
+
+    printf("El archivo ha sido copiado y modificado correctamente.\n");
+
+    fclose(archivo_origen);
+    fclose(archivo_destino);
+}
+
+
 void menuprincipal(void){
     printf("\t\t\tMENU PRINCIPAL\n\n");
     printf("Introduzca el numero indicado para acceder a la opción:\n\n");
@@ -92,35 +151,11 @@ void menuprincipal(void){
     printf("\t5.\tHistorial.\n");
     printf("\t6.\tCerrar el programa.\n");
 }
-void mostrardatoscompletos(struct fila *nfilas, FILE *archivocompleto,int n){
-    int i;
-
-    for(i=-2;i<n;i++){
-
-	fgets(nfilas[i].filascompletas,sizeof(nfilas[i].filascompletas),archivocompleto);
-
-		nfilas[i].filascompletas[strlen(nfilas[i].filascompletas)]='\0';
-
-	nfilas[i].filascompletas[strlen(nfilas[i].filascompletas)-1]='.';
 
 
-}
-    rewind(archivocompleto);
-    for(i=-2;i<n;i++){
-        fgets(nfilas[i].filascompletas,sizeof(nfilas[i].filascompletas),archivocompleto);
-
-		nfilas[i].filascompletas[strlen(nfilas[i].filascompletas)]='"';
-
-	nfilas[i].filascompletas[strlen(nfilas[i].filascompletas)-1]='\n';
-    }
 
 
-for(i=0;i<n;i++){
 
-	printf ("%s\n",nfilas[i].filascompletas);
-
-}
-}
 void menubusqueda(void){
     printf("\t1.\tFecha.");
     printf("\t2.\tEnergia.");

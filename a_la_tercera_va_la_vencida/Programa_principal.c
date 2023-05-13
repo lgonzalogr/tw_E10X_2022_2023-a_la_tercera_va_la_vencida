@@ -100,7 +100,6 @@ void mostrarDatosCompletos(const char* nombre_archivo) {
     }
 
     char caracter;
-    printf("Contenido del archivo %s:\n", nombre_archivo);
     while ((caracter = fgetc(archivo)) != EOF) {
         printf("%c", caracter);
     }

@@ -9,7 +9,7 @@ void menuprincipal(void);
 void mostrardatoscompletos(struct fila *, FILE *, int);
 void menubusqueda(void);
 void menubusquedafecha(struct fila *,FILE *);
-void cadenasindependientes(FILE *, int ,int ,char [][25]);
+//void cadenasindependientes(FILE *, int ,int ,char [][560]);
 int main(){
     int eleccion,eleccionbusqueda;
     int i=0,j,n=0,ncomas=0;
@@ -53,7 +53,10 @@ int main(){
                     switch(eleccionbusqueda){
                         case 1:
                             menubusquedafecha(nfilas,archivocompleto);
-                            cadenasindependientes(archivocompleto,n,ncomas/23+1,datos);
+                            //cadenasindependientes(archivocompleto,n,ncomas,datos);
+                            //rewind(archivocompleto);
+                            printf("Seleccione la columna que desea mostrar:\n");
+
                     }
 
 
@@ -98,7 +101,7 @@ void mostrardatoscompletos(struct fila *nfilas, FILE *archivocompleto,int n){
 
 		nfilas[i].filascompletas[strlen(nfilas[i].filascompletas)]='\0';
 
-	nfilas[i].filascompletas[strlen(nfilas[i].filascompletas)-1]=';';
+	nfilas[i].filascompletas[strlen(nfilas[i].filascompletas)-1]='.';
 
 
 }
@@ -138,7 +141,7 @@ void menubusquedafecha(struct fila *filafechas,FILE *fechas){
 }
 //void busquedafecha()
 
-void cadenasindependientes(FILE *archivo, int filas,int columnas,char datosindependientes[][25]){
+/*void cadenasindependientes(FILE *archivo, int filas,int columnas,char datosindependientes[][560]){
     int i,j;
     archivo=fopen("generacion.csv","r");
     for(i=0;i<filas;i++){
@@ -147,4 +150,4 @@ void cadenasindependientes(FILE *archivo, int filas,int columnas,char datosindep
         }
     }
     fclose(archivo);
-}
+}*/

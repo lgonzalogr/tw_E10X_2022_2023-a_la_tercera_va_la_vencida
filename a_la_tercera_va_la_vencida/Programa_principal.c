@@ -3,26 +3,32 @@
 #include<string.h>
 struct fila{
     char filascompletas[432];
-    char numero[100];
+};
+struct datos{
+    char energiagenerada[1000];
+    char tipoenergia[25];
 };
 void menuprincipal(void);
 void copiarArchivoModificado(const char* nombre_origen, const char* nombre_destino);
 void mostrardatoscompletos(struct fila *, FILE *, int);
 void menubusqueda(void);
 void menubusquedafecha(struct fila *,FILE *);
+void datosindependientes(FILE *,struct datos *,struct datos *);
 //void cadenasindependientes(FILE *, int ,int ,char [][560]);
 int main(){
     int eleccion,eleccionbusqueda;
     int i=0,j,n=0,ncomas=0;
+    int contador=0;
     char c,comas;
     char datos[50][560];
     char nombre_archivo_origen[100] = "generacion.csv";
-    char nombre_archivo_destino[100] = "copiabonita.txt";
+    char nombre_archivo_destino[100] = "copiageneracion.csv";
     struct fila *nfilas; //Declaracion del puntero para reserva de memoria mas adelante
     FILE *archivocompleto, copiabonita; //Declaracion del archivo principal
-
+    struct datos usardatos;
     while(eleccion!=6){
         menuprincipal();
+
             scanf("%i",&eleccion);
             archivocompleto=fopen("generacion.csv","r");
                     while(!feof(archivocompleto)){ //Se cuenta el numero de filas
@@ -43,7 +49,6 @@ int main(){
 
 
 
-
                 case 1:
                 printf("\n\n\t1.\tVer datos completos.\n"); // comprobacion
                 copiarArchivoModificado(nombre_archivo_origen, nombre_archivo_destino);
@@ -55,6 +60,7 @@ int main(){
 
                 case 2:
                 while(eleccionbusqueda!=4){
+
                     printf("Seleccione el tipo de busqueda que desea:\n");
                     menubusqueda();
                     scanf("%i",&eleccionbusqueda);
@@ -62,8 +68,8 @@ int main(){
                         case 1:
                             menubusquedafecha(nfilas,archivocompleto);
                             //cadenasindependientes(archivocompleto,n,ncomas,datos);
-                            //rewind(archivocompleto);
-                            printf("Seleccione la columna que desea mostrar:\n");
+                            rewind(archivocompleto);
+                            datosindependientes(archivocompleto,usardatos.energiagenerada,usardatos.tipoenergia);
 
                     }
 
@@ -92,7 +98,7 @@ int main(){
 
 
 void mostrarDatosCompletos(const char* nombre_archivo) {
-    FILE* archivo = fopen("copiabonita.txt", "r");
+    FILE* archivo = fopen("copiageneracion.csv", "r");
 
     if (archivo == NULL) {
         printf("No se pudo abrir el archivo.\n");
@@ -126,7 +132,7 @@ void copiarArchivoModificado(const char* nombre_origen, const char* nombre_desti
     }
 
     while ((caracter = fgetc(archivo_origen)) != EOF) {
-        if (caracter == ',' || caracter == ';'|| caracter == '"') {
+        if ( caracter == ';'|| caracter == '"') {
             fputc(' ', archivo_destino);
         } else {
             fputc(caracter, archivo_destino);
@@ -185,3 +191,33 @@ void menubusquedafecha(struct fila *filafechas,FILE *fechas){
     }
     fclose(archivo);
 }*/
+void datosindependientes(FILE *archivo,struct datos *generacion,struct datos *tipo){
+    int contador=0;
+    archivo = fopen("generacion.csv", "r");
+    if (archivo == NULL) {
+        printf("No se pudo abrir el archivo.\n");
+        return -1;
+    }
+
+    // Leer y procesar cada línea del archivo
+    while (fgets(generacion, sizeof(generacion), archivo) != NULL && contador < 1000) {
+        char *token;
+        char *prevToken = NULL;
+
+        // Buscar la primera coma en la línea
+        token = strtok(generacion, ",");
+        while (token != NULL) {
+            if (prevToken != NULL) {
+                // Almacenar el valor anterior a la coma en la estructura correspondiente
+                strcpy(generacion[contador].energiagenerada, prevToken);
+                contador++;
+            }
+            prevToken = token;
+            token = strtok(NULL, ",");
+        }
+    }
+
+    // Cerrar el archivo
+    fclose(archivo);
+
+}

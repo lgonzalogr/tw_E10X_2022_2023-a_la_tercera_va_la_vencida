@@ -25,7 +25,7 @@ int main(){
     char nombre_archivo_destino[100] = "copiageneracion.csv";
     struct fila *nfilas; //Declaracion del puntero para reserva de memoria mas adelante
     FILE *archivocompleto, copiabonita; //Declaracion del archivo principal
-    struct datos usardatos;
+    struct datos *usardatos;
     while(eleccion!=6){
         menuprincipal();
 
@@ -69,7 +69,7 @@ int main(){
                             menubusquedafecha(nfilas,archivocompleto);
                             //cadenasindependientes(archivocompleto,n,ncomas,datos);
                             rewind(archivocompleto);
-                            datosindependientes(archivocompleto,usardatos.energiagenerada,usardatos.tipoenergia);
+                            datosindependientes(archivocompleto,usardatos[].energiagenerada,usardatos[].tipoenergia);
 
                     }
 
@@ -193,7 +193,7 @@ void menubusquedafecha(struct fila *filafechas,FILE *fechas){
 }*/
 void datosindependientes(FILE *archivo,struct datos *generacion,struct datos *tipo){
     int contador=0;
-    archivo = fopen("generacion.csv", "r");
+    archivo = fopen("copiageneracion.csv", "r");
     if (archivo == NULL) {
         printf("No se pudo abrir el archivo.\n");
         return -1;

@@ -20,6 +20,7 @@ void mostrardatoscompletos(struct fila *, FILE *, int);
 void menubusqueda(void);
 void menubusquedafecha(struct fila *,FILE *);
 void datosindependientes(FILE *,struct datos *,struct datos *);
+void menubusquedafechaenergia(struct fila *,FILE *);
 //void cadenasindependientes(FILE *, int ,int ,char [][560]);
 int main(){
     int eleccion,eleccionbusqueda;
@@ -85,66 +86,58 @@ int main(){
                             if(year==22){
                                 operador1=12;
                             }else operador1=0;
-
-
-
-
-
-
-
                             file = fopen("copiageneracion.csv", "r");
-    if (file == NULL) {
-        printf("No se pudo abrir el archivo.\n");
-        return 1;
-    }
+                            if (file == NULL) {
+                                printf("No se pudo abrir el archivo.\n");
+                                return 1;
+                            }
 
-    // Leer y procesar cada línea del archivo
-    while (fgets(line, sizeof(line), file) != NULL && count < 1000) {
-        char *token;
-        char *prevToken = NULL;
+                            // Leer y procesar cada línea del archivo
+                                while (fgets(line, sizeof(line), file) != NULL && count < 1000) {
+                                    char *token;
+                                    char *prevToken = NULL;
 
-        // Buscar la primera coma en la línea
-        token = strtok(line, ",");
-        while (token != NULL) {
-            if (prevToken != NULL) {
-                // Convertir la cadena de caracteres a un valor float
-                data[count].value = atof(prevToken);
+                                // Buscar la primera coma en la línea
+                                    token = strtok(line, ",");
+                                        while (token != NULL) {
+                                            if (prevToken != NULL) {
+                                            // Convertir la cadena de caracteres a un valor float
+                                            data[count].value = atof(prevToken);
 
-                // Almacenar el valor anterior a la coma en la estructura correspondiente
-                strcpy(data2[count].value, prevToken);
+                                            // Almacenar el valor anterior a la coma en la estructura correspondiente
+                                            strcpy(data2[count].value, prevToken);
 
-                count++;
-            }
-            prevToken = token;
-            token = strtok(NULL, ",");
-        }
-    }
+                                            count++;
+                                            }
+                                        prevToken = token;
+                                        token = strtok(NULL, ",");
+                                        }
+                                }
 
-    // Cerrar el archivo
-    fclose(file);
+                            // Cerrar el archivo
+                            fclose(file);
 
-    // Mostrar los valores almacenados en el vector de estructuras
+                            // Mostrar los valores almacenados en el vector de estructuras
 
-    for (i = 32; i < 324; i += 25) {
-        printf("%s \t", data2[i].value);
-    }
-    printf("\n\n\n\n");
-    for (i = 32+mes+operador1; i < 332; i += 25) {
-        printf("%.5f        ", data[i].value);
-    }
-    printf("\n\n\n\n");
+                            for (i = 32; i < 324; i += 25) {
+                            printf("%s \t", data2[i].value);
+                            }
+                            printf("\n\n\n\n");
+                            for (i = 32+mes+operador1; i < 332; i += 25) {
+                            printf("%.5f        ", data[i].value);
+                            }
+                            printf("\n\n\n\n");
+                            for (i = 332; i < 458; i += 25) {
+                            printf("%s\t", data2[i].value);
+                            }
+                            printf("\n\n\n\n");
+                            for (i = 332+mes+operador1; i < count; i += 25) {
+                            printf("%.5f            ", data[i].value);
+                            }
+                            printf("\n\n\n\n");
 
-    for (i = 332; i < 458; i += 25) {
-        printf("%s\t", data2[i].value);
-    }
-printf("\n\n\n\n");
-    for (i = 332+mes+operador1; i < count; i += 25) {
-        printf("%.5f            ", data[i].value);
-    }
-printf("\n\n\n\n");
-
-
-
+                        case 2:
+                            menubusquedafechaenergia(nfilas,archivocompleto);
 
                     }
 
@@ -254,34 +247,36 @@ void menubusquedafecha(struct fila *filafechas,FILE *fechas){
     fclose(fechas);
 }
 }
-
-/*void datosindependientes(FILE *archivo,){
-    int contador=0;
-    archivo = fopen("copiageneracion.csv", "r");
-    if (archivo == NULL) {
-        printf("No se pudo abrir el archivo.\n");
-        return -1;
+void menubusquedafechaenergia(struct fila *filafechas,FILE *fechas){
+    fechas=fopen("copiageneracion.csv","r");
+    int i,numero;
+    printf("Seleccione con el numero el tipo de energia:\n");
+    printf("1. Hidraulica\n");
+    printf("2. Turbinacion bombeo\n");
+    printf("3. Nuclear\n");
+    printf("4. Carbon\n");
+    printf("5. Fuel + Gas\n");
+    printf("6. Motores diesel\n");
+    printf("7. Turbina de gas\n");
+    printf("8. Turbina de vapor\n");
+    printf("9. Ciclo combinado\n");
+    printf("10. Hidroeolica\n");
+    printf("11. Eolica\n");
+    printf("12. Solar fotovoltaica\n");
+    printf("13. Solar termica\n");
+    printf("14. Otras renovables\n");
+    printf("15. Cogeneracion\n");
+    printf("16. Residuos no renovables\n");
+    printf("17. Residuos renovables\n");
+    printf("18. Generacion total\n");
+    scanf("%i",&numero);
+    for(i=0;i<=25;i++){
+        fgets(filafechas[i].filascompletas,sizeof(filafechas[i].filascompletas),fechas);
     }
+    for(i=4+numero;i<=4+numero;i++){
 
-    // Leer y procesar cada línea del archivo
-    while (fgets(generacion, sizeof(generacion), archivo) != NULL && contador < 1000) {
-        char *token;
-        char *prevToken = NULL;
+	printf ("%s\n",filafechas[i].filascompletas);
+    fclose(fechas);
+}
+}
 
-        // Buscar la primera coma en la línea
-        token = strtok(generacion, ",");
-        while (token != NULL) {
-            if (prevToken != NULL) {
-                // Almacenar el valor anterior a la coma en la estructura correspondiente
-                strcpy(generacion[contador].energiagenerada, prevToken);
-                contador++;
-            }
-            prevToken = token;
-            token = strtok(NULL, ",");
-        }
-    }
-
-    // Cerrar el archivo
-    fclose(archivo);
-
-}*/

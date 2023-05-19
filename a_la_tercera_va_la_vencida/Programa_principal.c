@@ -4,10 +4,16 @@
 struct fila{
     char filascompletas[432];
 };
-struct datos{
-    char energiagenerada[1000];
-    char tipoenergia[25];
-};
+
+typedef struct {
+    float value;
+    char tipo;
+} Data;
+
+typedef struct {
+    char value[1000];
+} Data2;
+
 void menuprincipal(void);
 void copiarArchivoModificado(const char* nombre_origen, const char* nombre_destino);
 void mostrardatoscompletos(struct fila *, FILE *, int);
@@ -20,12 +26,17 @@ int main(){
     int i=0,j,n=0,ncomas=0;
     int contador=0;
     char c,comas;
-    char datos[50][560];
+    char filasindependientes[1000];
     char nombre_archivo_origen[100] = "generacion.csv";
     char nombre_archivo_destino[100] = "copiageneracion.csv";
     struct fila *nfilas; //Declaracion del puntero para reserva de memoria mas adelante
-    FILE *archivocompleto, copiabonita; //Declaracion del archivo principal
-    struct datos *usardatos;
+    FILE *archivocompleto, copiabonita,*file; //Declaracion del archivo principal
+
+    char line[1000];
+    Data data[1000];
+    Data2 data2[1000];
+    int count = 0;
+
     while(eleccion!=6){
         menuprincipal();
 
@@ -60,16 +71,65 @@ int main(){
 
                 case 2:
                 while(eleccionbusqueda!=4){
-
                     printf("Seleccione el tipo de busqueda que desea:\n");
                     menubusqueda();
                     scanf("%i",&eleccionbusqueda);
                     switch(eleccionbusqueda){
                         case 1:
                             menubusquedafecha(nfilas,archivocompleto);
-                            //cadenasindependientes(archivocompleto,n,ncomas,datos);
-                            rewind(archivocompleto);
-                            datosindependientes(archivocompleto,usardatos[].energiagenerada,usardatos[].tipoenergia);
+                            file = fopen("copiageneracion.csv", "r");
+    if (file == NULL) {
+        printf("No se pudo abrir el archivo.\n");
+        return 1;
+    }
+
+    // Leer y procesar cada línea del archivo
+    while (fgets(line, sizeof(line), file) != NULL && count < 1000) {
+        char *token;
+        char *prevToken = NULL;
+
+        // Buscar la primera coma en la línea
+        token = strtok(line, ",");
+        while (token != NULL) {
+            if (prevToken != NULL) {
+                // Convertir la cadena de caracteres a un valor float
+                data[count].value = atof(prevToken);
+
+                // Almacenar el valor anterior a la coma en la estructura correspondiente
+                strcpy(data2[count].value, prevToken);
+
+                count++;
+            }
+            prevToken = token;
+            token = strtok(NULL, ",");
+        }
+    }
+
+    // Cerrar el archivo
+    fclose(file);
+
+    // Mostrar los valores almacenados en el vector de estructuras
+
+    for (i = 32; i < 324; i += 25) {
+        printf("%s \t", data2[i].value);
+    }
+    printf("\n\n\n\n");
+    for (i = 33; i < 331; i += 25) {
+        printf("%.5f        ", data[i].value);
+    }
+    printf("\n\n\n\n");
+
+    for (i = 332; i < 458; i += 25) {
+        printf("%s\t", data2[i].value);
+    }
+printf("\n\n\n\n");
+    for (i = 333; i < count; i += 25) {
+        printf("%.5f            ", data[i].value);
+    }
+printf("\n\n\n\n");
+
+
+
 
                     }
 
@@ -132,7 +192,7 @@ void copiarArchivoModificado(const char* nombre_origen, const char* nombre_desti
     }
 
     while ((caracter = fgetc(archivo_origen)) != EOF) {
-        if ( caracter == ';'|| caracter == '"') {
+        if ( caracter == '\0'|| caracter == '"') {
             fputc(' ', archivo_destino);
         } else {
             fputc(caracter, archivo_destino);
@@ -179,19 +239,8 @@ void menubusquedafecha(struct fila *filafechas,FILE *fechas){
     fclose(fechas);
 }
 }
-//void busquedafecha()
 
-/*void cadenasindependientes(FILE *archivo, int filas,int columnas,char datosindependientes[][560]){
-    int i,j;
-    archivo=fopen("generacion.csv","r");
-    for(i=0;i<filas;i++){
-        for(j=0;j<columnas;j++){
-            fgets(datosindependientes[i][j],sizeof(datosindependientes),archivo);
-        }
-    }
-    fclose(archivo);
-}*/
-void datosindependientes(FILE *archivo,struct datos *generacion,struct datos *tipo){
+/*void datosindependientes(FILE *archivo,){
     int contador=0;
     archivo = fopen("copiageneracion.csv", "r");
     if (archivo == NULL) {
@@ -220,4 +269,4 @@ void datosindependientes(FILE *archivo,struct datos *generacion,struct datos *ti
     // Cerrar el archivo
     fclose(archivo);
 
-}
+}*/

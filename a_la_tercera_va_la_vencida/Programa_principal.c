@@ -23,8 +23,9 @@ void datosindependientes(FILE *,struct datos *,struct datos *);
 //void cadenasindependientes(FILE *, int ,int ,char [][560]);
 int main(){
     int eleccion,eleccionbusqueda;
-    int i=0,j,n=0,ncomas=0;
+    int i=0,j,n=0,ncomas=0,year,mes;
     int contador=0;
+    int operador1=0,operador2=0;
     char c,comas;
     char filasindependientes[1000];
     char nombre_archivo_origen[100] = "generacion.csv";
@@ -77,6 +78,20 @@ int main(){
                     switch(eleccionbusqueda){
                         case 1:
                             menubusquedafecha(nfilas,archivocompleto);
+                            printf("Indique el año: 21 o 22?\n");
+                            scanf("%i",&year);
+                            printf("Indique el mes: 1,2,3,...,12\n");
+                            scanf("%i",&mes);
+                            if(year==22){
+                                operador1=12;
+                            }else operador1=0;
+
+
+
+
+
+
+
                             file = fopen("copiageneracion.csv", "r");
     if (file == NULL) {
         printf("No se pudo abrir el archivo.\n");
@@ -114,7 +129,7 @@ int main(){
         printf("%s \t", data2[i].value);
     }
     printf("\n\n\n\n");
-    for (i = 33; i < 331; i += 25) {
+    for (i = 32+mes+operador1; i < 332; i += 25) {
         printf("%.5f        ", data[i].value);
     }
     printf("\n\n\n\n");
@@ -123,7 +138,7 @@ int main(){
         printf("%s\t", data2[i].value);
     }
 printf("\n\n\n\n");
-    for (i = 333; i < count; i += 25) {
+    for (i = 332+mes+operador1; i < count; i += 25) {
         printf("%.5f            ", data[i].value);
     }
 printf("\n\n\n\n");

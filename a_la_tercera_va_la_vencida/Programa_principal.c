@@ -161,6 +161,9 @@ int main(){
 
             case 1:
                 printf("Contenido del archivo 'mayormenor.txt':\n");
+        ordenarMayorMenor(nombre_archivo_destino, nombre_archivo_mayor_menor);
+        printf("Contenido del archivo 'mayormenor.txt':\n");
+        mostrarDatosCompletos(nombre_archivo_mayor_menor);
 
             case 2:
                 printf("Contenido del archivo 'menormayor.txt':\n");

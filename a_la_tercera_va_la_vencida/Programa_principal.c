@@ -72,6 +72,8 @@ int main(){
                 printf("\n\n\t1.\tVer datos completos.\n"); // comprobacion
                 copiarArchivoModificado(nombre_archivo_origen, nombre_archivo_destino);
                 mostrarDatosCompletos(nombre_archivo_destino);
+                rewind(nombre_archivo_destino);
+
                 break;
 
 
@@ -218,7 +220,7 @@ void copiarArchivoModificado(const char* nombre_origen, const char* nombre_desti
         return;
     }
 
-    archivo_destino = fopen(nombre_destino, "w");
+    archivo_destino = fopen(nombre_destino, "a");
     if (archivo_destino == NULL) {
         printf("No se pudo abrir el archivo de destino.\n");
         return;
@@ -263,7 +265,7 @@ void ordenarMenorMayor(const char* nombre_origen, const char* nombre_destino) {
         return;
     }
 
-    archivo_destino = fopen("menormayor.txt", "w");
+    archivo_destino = fopen("menormayor.txt", "a");
     if (archivo_destino == NULL) {
         printf("No se pudo abrir el archivo de destino.\n");
         return;
@@ -341,7 +343,7 @@ void ordenarMayorMenor(const char* nombre_origen, const char* nombre_destino) {
         return;
     }
 
-    archivo_destino = fopen("mayormenor.txt", "w");
+    archivo_destino = fopen("mayormenor.txt", "a");
     if (archivo_destino == NULL) {
         printf("No se pudo abrir el archivo de destino.\n");
         return;

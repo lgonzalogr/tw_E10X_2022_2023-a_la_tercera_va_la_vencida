@@ -25,10 +25,11 @@ void menubusqueda(void);
 void menubusquedafecha(struct fila *,FILE *);
 void datosindependientes(FILE *,struct datos *,struct datos *);
 void menubusquedafechaenergia(struct fila *,FILE *);
+void mostrarenergias(void);
 //void cadenasindependientes(FILE *, int ,int ,char [][560]);
 int main(){
     int eleccion,eleccionbusqueda,eleccion2;
-    int i=0,j,n=0,ncomas=0,year,mes;
+    int i=0,j,n=0,ncomas=0,year,mes,energia;
     int contador=0;
     int operador1=0,operador2=0;
     char c,comas;
@@ -70,9 +71,9 @@ int main(){
 
                 case 1:
                 printf("\n\n\t1.\tVer datos completos.\n"); // comprobacion
-                copiarArchivoModificado(nombre_archivo_origen, nombre_archivo_destino);
+                //copiarArchivoModificado(nombre_archivo_origen, nombre_archivo_destino);
                 mostrarDatosCompletos(nombre_archivo_destino);
-                rewind(nombre_archivo_destino);
+                //rewind(nombre_archivo_destino);
 
                 break;
 
@@ -143,9 +144,64 @@ int main(){
                             printf("%.5f            ", data[i].value);
                             }
                             printf("\n\n\n\n");
+                        break;
 
                         case 2:
                             menubusquedafechaenergia(nfilas,archivocompleto);
+                        break;
+
+                        case 3:
+                            printf("Indique el año: 21 o 22?\n");
+                            scanf("%i",&year);
+                            printf("Indique el mes: 1,2,3,...,12\n");
+                            scanf("%i",&mes);
+                            printf("Indique el tipo de energia:\n");
+                            mostrarenergias();
+                            scanf("%i",&energia);
+                            if(year==22){
+                                operador1=12;
+                            }else operador1=0;
+                            file = fopen("copiageneracion.csv", "r");
+                            if (file == NULL) {
+                                printf("No se pudo abrir el archivo.\n");
+                                return 1;
+                            }
+
+                            // Leer y procesar cada línea del archivo
+                                while (fgets(line, sizeof(line), file) != NULL && count < 1000) {
+                                    char *token;
+                                    char *prevToken = NULL;
+
+                                // Buscar la primera coma en la línea
+                                    token = strtok(line, ",");
+                                        while (token != NULL) {
+                                            if (prevToken != NULL) {
+                                            // Convertir la cadena de caracteres a un valor float
+                                            data[count].value = atof(prevToken);
+
+                                            // Almacenar el valor anterior a la coma en la estructura correspondiente
+                                            strcpy(data2[count].value, prevToken);
+
+                                            count++;
+                                            }
+                                        prevToken = token;
+                                        token = strtok(NULL, ",");
+                                        }
+                                }
+
+                            // Cerrar el archivo
+                            fclose(file);
+
+                            // Mostrar los valores almacenados en el vector de estructuras
+
+                            for (i = 32+25*energia-25; i <=32+25*energia-25 ; i ++) {
+                            printf("%s \t", data2[i].value);
+                            }
+                            printf("\n\n");
+                            for (i = 32+mes+operador1+25*energia-25; i <=32+mes+operador1+25*energia-25 ; i++) {
+                            printf("%.5f        \n\n\n\n", data[i].value);
+                            }
+                        break;
 
                     }
 
@@ -259,7 +315,7 @@ void ordenarMenorMayor(const char* nombre_origen, const char* nombre_destino) {
     char* datos;
     int num_datos = 0;
 
-    archivo_origen = fopen("generacion.csv", "r");
+    archivo_origen = fopen("copiageneracion.csv", "r");
     if (archivo_origen == NULL) {
         printf("No se pudo abrir el archivo de origen.\n");
         return;
@@ -461,4 +517,24 @@ void menubusquedafechaenergia(struct fila *filafechas,FILE *fechas){
     fclose(fechas);
 }
 }
-
+void mostrarenergias(void){
+    printf("Seleccione con el numero el tipo de energia:\n");
+    printf("1. Hidraulica\n");
+    printf("2. Turbinacion bombeo\n");
+    printf("3. Nuclear\n");
+    printf("4. Carbon\n");
+    printf("5. Fuel + Gas\n");
+    printf("6. Motores diesel\n");
+    printf("7. Turbina de gas\n");
+    printf("8. Turbina de vapor\n");
+    printf("9. Ciclo combinado\n");
+    printf("10. Hidroeolica\n");
+    printf("11. Eolica\n");
+    printf("12. Solar fotovoltaica\n");
+    printf("13. Solar termica\n");
+    printf("14. Otras renovables\n");
+    printf("15. Cogeneracion\n");
+    printf("16. Residuos no renovables\n");
+    printf("17. Residuos renovables\n");
+    printf("18. Generacion total\n");
+}

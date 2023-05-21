@@ -24,9 +24,9 @@ void escribirMayorMenor(const char* nombre_archivo_origen, const char* nombre_ar
 void menubusqueda(void);
 void menubusquedafecha(struct fila *,FILE *);
 void datosindependientes(FILE *,struct datos *,struct datos *);
-void menubusquedafechaenergia(struct fila *,FILE *);
+void menubusquedafechaenergia(struct fila *,FILE *,FILE *);
 void mostrarenergias(void);
-void funcionhistorial(FILE *,FILE *);
+
 //void cadenasindependientes(FILE *, int ,int ,char [][560]);
 int main(){
     int eleccion,eleccionbusqueda,eleccion2;
@@ -62,9 +62,6 @@ int main(){
                         comas=fgetc(archivocompleto);
                         if (comas==',') ncomas++;
                         }
-                    printf("El numero de filas es: %i\n",n);// comprobacion
-                    printf("El numero de comas es: %i\n",ncomas);
-                    printf("El numero de columnas es: %i\n",ncomas/23+1);
                     nfilas=(struct fila*)malloc(n*sizeof(struct fila));
                     fclose(archivocompleto);
             switch(eleccion){
@@ -136,28 +133,33 @@ int main(){
                             fclose(file);
 
                             // Mostrar los valores almacenados en el vector de estructuras
+                            historial=fopen("historial.csv","a");
 
                             for (i = 32; i < 324; i += 25) {
                             printf("%s \t", data2[i].value);
+                            fputs(data2[i].value,historial);
                             }
                             printf("\n\n\n\n");
                             for (i = 32+mes+operador1; i < 332; i += 25) {
                             printf("%.5f        ", data[i].value);
+                            fprintf(historial,"%.5f            ",data[i].value);
                             }
                             printf("\n\n\n\n");
                             for (i = 332; i < 458; i += 25) {
                             printf("%s\t", data2[i].value);
+                            fputs(data2[i].value,historial);
                             }
                             printf("\n\n\n\n");
                             for (i = 332+mes+operador1; i < count; i += 25) {
                             printf("%.5f            ", data[i].value);
+                            fprintf(historial,"%.5f            ",data[i].value);
                             }
                             printf("\n\n\n\n");
-
+                        fclose(historial);
                         break;
 
                         case 2:
-                            menubusquedafechaenergia(nfilas,archivocompleto);
+                            menubusquedafechaenergia(nfilas,archivocompleto,historial);
                         break;
 
                         case 3:
@@ -203,14 +205,17 @@ int main(){
                             fclose(file);
 
                             // Mostrar los valores almacenados en el vector de estructuras
-
+                            historial=fopen("historial.csv","a");
                             for (i = 32+25*energia-25; i <=32+25*energia-25 ; i ++) {
                             printf("%s \t", data2[i].value);
+                            fputs(data2[i].value,historial);
                             }
                             printf("\n\n");
                             for (i = 32+mes+operador1+25*energia-25; i <=32+mes+operador1+25*energia-25 ; i++) {
                             printf("%.5f        \n\n\n\n", data[i].value);
+                            fprintf(historial,"%.5f        \n\n\n\n", data[i].value);
                             }
+                            fclose(historial);
                         break;
 
                     }
@@ -485,6 +490,7 @@ void menubusqueda(void){
 }
 void menubusquedafecha(struct fila *filafechas,FILE *fechas){
     fechas=fopen("generacion.csv","r");
+
     int i;
     for(i=0;i<=4;i++){
         fgets(filafechas[i].filascompletas,sizeof(filafechas[i].filascompletas),fechas);
@@ -493,11 +499,14 @@ void menubusquedafecha(struct fila *filafechas,FILE *fechas){
 
 	printf ("%s\n",filafechas[i].filascompletas);
     fclose(fechas);
+
 }
 }
-void menubusquedafechaenergia(struct fila *filafechas,FILE *fechas){
+void menubusquedafechaenergia(struct fila *filafechas,FILE *fechas,FILE *historial){
     fechas=fopen("copiageneracion.csv","r");
+    historial=fopen("historial.csv","a");
     int i,numero;
+    char caracter;
     printf("Seleccione con el numero el tipo de energia:\n");
     printf("1. Hidraulica\n");
     printf("2. Turbinacion bombeo\n");
@@ -524,9 +533,12 @@ void menubusquedafechaenergia(struct fila *filafechas,FILE *fechas){
     for(i=4+numero;i<=4+numero;i++){
 
 	printf ("%s\n",filafechas[i].filascompletas);
+	fputs(filafechas[i].filascompletas,historial);
     fclose(fechas);
+    fclose(historial);
 }
 }
+
 void mostrarenergias(void){
     printf("Seleccione con el numero el tipo de energia:\n");
     printf("1. Hidraulica\n");
@@ -548,23 +560,4 @@ void mostrarenergias(void){
     printf("17. Residuos renovables\n");
     printf("18. Generacion total\n");
 }
-void funcionhistorial(FILE *historial,FILE *generacion){
-    historial=fopen("historial.csv","a");
-    generacion=fopen("generacion.csv","r");
-    if (historial == NULL) {
-        printf("No se pudo abrir el archivo Historial.\n");
-        return 1;
-    }
-    char caracter;
-    while ((caracter = fgetc(generacion)) != EOF) {
-        printf("%c", caracter);
 
-    }
-    fclose(historial);
-    fclose(generacion);
-    printf("\n\n\n");
-
-
-
-
-}

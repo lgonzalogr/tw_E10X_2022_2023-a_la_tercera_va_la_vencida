@@ -223,9 +223,9 @@ int main(){
 
                     }
                 break;
-    case 3:
-         printf("Seleccione los datos que desea añadir:\n");
-        break;
+                case 3:
+                    printf("Seleccione los datos que desea añadir:\n");
+                break;
     case 4:
         {
             printf("Seleccione la operación estadistica que desea: mayor a menor (1) o menor a mayor(2)\n");
@@ -248,9 +248,20 @@ int main(){
         }
 
         break;
-    case 5:
-        printf("Indique como desea ver el historial:\n");
-        }
+                case 5:
+                    historial=fopen("historial.csv","r");
+                    if (historial == NULL) {
+                        printf("No se pudo abrir el archivo.\n");
+                        return;
+                    }
+
+                    while ((caracter = fgetc(historial)) != EOF) {
+                        printf("%c", caracter);
+                    }
+                    fclose(historial);
+                break;
+
+            }
 
 
         }

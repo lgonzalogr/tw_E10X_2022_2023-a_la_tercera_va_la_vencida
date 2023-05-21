@@ -75,7 +75,6 @@ int main(){
                 //rewind(nombre_archivo_destino);
                 //funcionhistorial(historial,archivocompleto);
                 archivocompleto=fopen("generacion.csv","r");
-                historial=fopen("historial.csv","a");
                 while((caracter = fgetc(archivocompleto)) != EOF){
                     putc(caracter,historial);
                 }

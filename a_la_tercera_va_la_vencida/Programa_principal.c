@@ -249,7 +249,7 @@ int main(){
 
 
 void mostrarDatosCompletos(const char* nombre_archivo) {
-    FILE* archivo = fopen("copiageneracion.csv", "r");
+    FILE* archivo = fopen("archivo_mas_bonito.csv", "r");
 
     if (archivo == NULL) {
         printf("No se pudo abrir el archivo.\n");
@@ -261,7 +261,7 @@ void mostrarDatosCompletos(const char* nombre_archivo) {
         printf("%c", caracter);
     }
 
-    printf("\n");
+    printf("\n\n\n");
 
     fclose(archivo);
 }

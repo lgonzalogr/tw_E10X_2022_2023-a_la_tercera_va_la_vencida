@@ -26,6 +26,7 @@ void menubusquedafecha(struct fila *,FILE *);
 void datosindependientes(FILE *,struct datos *,struct datos *);
 void menubusquedafechaenergia(struct fila *,FILE *);
 void mostrarenergias(void);
+void funcionhistorial(FILE *,FILE *);
 //void cadenasindependientes(FILE *, int ,int ,char [][560]);
 int main(){
     int eleccion,eleccionbusqueda,eleccion2;
@@ -33,13 +34,14 @@ int main(){
     int contador=0;
     int operador1=0,operador2=0;
     char c,comas;
+    char caracter;
     char filasindependientes[1000];
     char nombre_archivo_origen[100] = "generacion.csv";
     char nombre_archivo_destino[100] = "copiageneracion.csv";
     char nombre_archivo_mayor_menor[100] = "mayormenor.txt";
     char nombre_archivo_menor_mayor[100] = "menormayor.txt";
     struct fila *nfilas; //Declaracion del puntero para reserva de memoria mas adelante
-    FILE *archivocompleto, copiabonita,*file; //Declaracion del archivo principal
+    FILE *archivocompleto, copiabonita,*file,*historial; //Declaracion del archivo principal
 
     char line[1000];
     Data data[1000];
@@ -74,7 +76,14 @@ int main(){
                 //copiarArchivoModificado(nombre_archivo_origen, nombre_archivo_destino);
                 mostrarDatosCompletos(nombre_archivo_destino);
                 //rewind(nombre_archivo_destino);
-
+                //funcionhistorial(historial,archivocompleto);
+                archivocompleto=fopen("generacion.csv","r");
+                historial=fopen("historial.csv","a");
+                while((caracter = fgetc(archivocompleto)) != EOF){
+                    putc(caracter,historial);
+                }
+                fclose(historial);
+                fclose(archivocompleto);
                 break;
 
 
@@ -144,6 +153,7 @@ int main(){
                             printf("%.5f            ", data[i].value);
                             }
                             printf("\n\n\n\n");
+
                         break;
 
                         case 2:
@@ -537,4 +547,24 @@ void mostrarenergias(void){
     printf("16. Residuos no renovables\n");
     printf("17. Residuos renovables\n");
     printf("18. Generacion total\n");
+}
+void funcionhistorial(FILE *historial,FILE *generacion){
+    historial=fopen("historial.csv","a");
+    generacion=fopen("generacion.csv","r");
+    if (historial == NULL) {
+        printf("No se pudo abrir el archivo Historial.\n");
+        return 1;
+    }
+    char caracter;
+    while ((caracter = fgetc(generacion)) != EOF) {
+        printf("%c", caracter);
+
+    }
+    fclose(historial);
+    fclose(generacion);
+    printf("\n\n\n");
+
+
+
+
 }

@@ -37,7 +37,7 @@ void mostrarDatos(FILE *archivo);
 
 //void cadenasindependientes(FILE *, int ,int ,char [][560]);
 int main(){
-    int eleccion,eleccionbusqueda,eleccion2;
+    int eleccion,eleccionbusqueda,eleccion2,eleccionmasdatos;
     int i=0,j,n=0,ncomas=0,year,mes,energia;
     int contador=0;
     int operador1=0,operador2=0;
@@ -49,7 +49,7 @@ int main(){
     char nombre_archivo_mayor_menor[100] = "mayormenor.txt";
     char nombre_archivo_menor_mayor[100] = "menormayor.txt";
     struct fila *nfilas; //Declaracion del puntero para reserva de memoria mas adelante
-    FILE *archivocompleto, copiabonita,*file,*historial; //Declaracion del archivo principal
+    FILE *archivocompleto, copiabonita,*file,*historial,*archivo; //Declaracion del archivo principal
 
     char line[1000];
     Data data[1000];
@@ -232,67 +232,93 @@ int main(){
                     }
                 break;
                 case 3:
-                    {
-                    printf("Seleccione los datos que desea añadir:\n");
-                    void agregarDatos(FILE *archivo)
-{
-    struct DatosEnergia nuevoDato;
-    printf("Ingrese el tipo de energia: ");
-    scanf("%s", nuevoDato.tipodeenergia);
-    printf("Ingrese el consumo de energía: ");
-    scanf("%lf", &nuevoDato.consumo);
-
-    fprintf(archivo, "%s %.2lf\n", nuevoDato.tipodeenergia, nuevoDato.consumo);
-
-    printf("Datos agregados correctamente.\n");
-}
-
-void mostrarDatos(FILE *archivo) {
-    printf("Distribución de energía de la red eléctrica española:\n");
-    struct DatosEnergia dato;
-
-    while (fscanf(archivo, "%s %lf", dato.tipodeenergia, &dato.consumo) == 2) {
-        printf("tipo de energia: %s, Consumo: %.2lf\n", dato.tipodeenergia, dato.consumo);
-    }
-}
-
-int bain() {
-    int opcion;
-    FILE *archivo = fopen("datos_energia.txt", "a+");
-
-    if (archivo == NULL) {
-        printf("Error al abrir el archivo.\n");
-        return 1;
-    }
-
-    do {
-        printf("1. Agregar datos\n");
-        printf("2. Mostrar datos\n");
-        printf("0. Salir\n");
-        printf("Seleccione una opción: ");
-        scanf("%d", &opcion);
-
-        switch (opcion) {
-            case 1:
-                agregarDatos(archivo);
-                break;
-            case 2:
-                mostrarDatos(archivo);
-                break;
-            case 0:
-                printf("Saliendo del programa.\n");
-                break;
-            default:
-                printf("Opción inválida. Intente nuevamente.\n");
-                break;
-        }
-    } while (opcion != 0);
-
-    fclose(archivo);
-
-    return 0;
-}
+                    while(eleccionmasdatos!=4){
+                    printf("Introduzca la opcion deseada:\n\n");
+                    printf("1. Añadir nueva generacion de energia:\n");
+                    printf("2. Añadir nuevos datos a las energias ya existentes:\n");
+                    printf("3. Ver datos:\n");
+                    printf("4. Volver:\n");
+                    scanf("%i",&eleccionmasdatos);
+                    switch(eleccionmasdatos){
+                    case 1:
+                        archivo=fopen("generacionmasdatos.csv","a");
+                        if (archivo == NULL) {
+                            printf("No se pudo abrir el archivo.\n");
+                        return 1;
+                        }
+                        while ((caracter = fgetc(archivo)) != EOF) {
+                        i=0;
+                        i++;
+                        }
+                        printf("%i",i);
+                        fclose(archivo);
+                        break;
+                    case 2:
+                        break;
                     }
+                    }
+//                    {
+//                    printf("Seleccione los datos que desea añadir:\n");
+//                    archivo=fopen("generacionmasdatos.csv","w");
+//
+//{
+//    struct DatosEnergia nuevoDato;
+//    printf("Ingrese el tipo de energia: ");
+//    scanf("%s", nuevoDato.tipodeenergia);
+//    printf("Ingrese el consumo de energía: ");
+//    scanf("%lf", &nuevoDato.consumo);
+//
+//    fprintf(archivo, "%s %.2lf\n", nuevoDato.tipodeenergia, nuevoDato.consumo);
+//
+//    printf("Datos agregados correctamente.\n");
+//}
+//
+//void mostrarDatos(FILE *archivo) {
+//    printf("Distribución de energía de la red eléctrica española:\n");
+//    struct DatosEnergia dato;
+//
+//    while (fscanf(archivo, "%s %lf", dato.tipodeenergia, &dato.consumo) == 2) {
+//        printf("tipo de energia: %s, Consumo: %.2lf\n", dato.tipodeenergia, dato.consumo);
+//    }
+//}
+//
+//int bain() {
+//    int opcion;
+//    FILE *archivo = fopen("datos_energia.txt", "a+");
+//
+//    if (archivo == NULL) {
+//        printf("Error al abrir el archivo.\n");
+//        return 1;
+//    }
+//
+//    do {
+//        printf("1. Agregar datos\n");
+//        printf("2. Mostrar datos\n");
+//        printf("0. Salir\n");
+//        printf("Seleccione una opción: ");
+//        scanf("%d", &opcion);
+//
+//        switch (opcion) {
+//            case 1:
+//                agregarDatos(archivo);
+//                break;
+//            case 2:
+//                mostrarDatos(archivo);
+//                break;
+//            case 0:
+//                printf("Saliendo del programa.\n");
+//                break;
+//            default:
+//                printf("Opción inválida. Intente nuevamente.\n");
+//                break;
+//        }
+//    } while (opcion != 0);
+//
+//    fclose(archivo);
+//
+//    return 0;
+//}
+//                    }
 
                 break;
     case 4:

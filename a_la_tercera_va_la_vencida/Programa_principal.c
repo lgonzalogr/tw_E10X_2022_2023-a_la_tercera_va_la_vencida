@@ -21,10 +21,7 @@ typedef struct {
 void menuprincipal(void);
 void copiarArchivoModificado(const char* nombre_origen, const char* nombre_destino);
 void mostrardatoscompletos(struct fila *, FILE *, int);
-void ordenarMenorMayor(const char* nombre_origen, const char* nombre_destino);
-void ordenarMayorMenor(const char* nombre_origen, const char* nombre_destino);
-void escribirMenorMayor(const char* nombre_archivo_origen, const char* nombre_archivo_destino);
-void escribirMayorMenor(const char* nombre_archivo_origen, const char* nombre_archivo_destino);
+
 void menubusqueda(void);
 void menubusquedafecha(struct fila *,FILE *);
 void datosindependientes(FILE *,struct datos *,struct datos *);
@@ -323,22 +320,15 @@ int main(){
                 break;
     case 4:
         {
-            printf("Seleccione la operación estadistica que desea: mayor a menor (1) o menor a mayor(2)\n");
+            printf("Seleccione la operación estadistica que desea: media (1) o desviacion tipica(2)\n");
             scanf("%i",&eleccion2);
             switch (eleccion2){
 
             case 1:
-                printf("Contenido del archivo 'mayormenor.txt':\n");
-        ordenarMayorMenor(nombre_archivo_destino, nombre_archivo_mayor_menor);
-        printf("Contenido del archivo 'mayormenor.txt':\n");
-        mostrarDatosCompletos(nombre_archivo_mayor_menor);
+                printf("aqui va la media de las generaciones\n");
 
             case 2:
-                printf("Contenido del archivo 'menormayor.txt':\n");
-        ordenarMenorMayor(nombre_archivo_destino, nombre_archivo_menor_mayor);
-        printf("Contenido del archivo 'menormayor.txt':\n");
-        mostrarDatosCompletos(nombre_archivo_menor_mayor);
-
+                printf("aqui va la desviacion tipica de las generaciones\n");
             }
         }
 
@@ -429,162 +419,6 @@ void menuprincipal(void){
     printf("\t6.\tCerrar el programa.\n");
 }
 
-
-void ordenarMenorMayor(const char* nombre_origen, const char* nombre_destino) {
-    FILE *archivo_origen, *archivo_destino;
-    char caracter;
-    char* datos;
-    int num_datos = 0;
-
-    archivo_origen = fopen("copiageneracion.csv", "r");
-    if (archivo_origen == NULL) {
-        printf("No se pudo abrir el archivo de origen.\n");
-        return;
-    }
-
-    archivo_destino = fopen("menormayor.txt", "a");
-    if (archivo_destino == NULL) {
-        printf("No se pudo abrir el archivo de destino.\n");
-        return;
-    }
-
-    // Saltar las primeras 5 filas
-    for (int i = 0; i < 5; i++) {
-        while ((caracter = fgetc(archivo_origen)) != '\n' && caracter != EOF);
-    }
-
-    // Obtener el número de datos en el archivo de origen
-    while ((caracter = fgetc(archivo_origen)) != EOF) {
-        if (caracter == ',' || caracter == ';') {
-            num_datos++;
-        }
-    }
-    num_datos++;  // Sumar uno más para contar el último dato sin coma o punto y coma
-
-    // Volver al inicio del archivo de origen
-    fseek(archivo_origen, 0, SEEK_SET);
-
-    // Saltar las primeras 5 filas
-    for (int i = 0; i < 5; i++) {
-        while ((caracter = fgetc(archivo_origen)) != '\n' && caracter != EOF);
-    }
-
-    // Leer y almacenar los datos en un arreglo
-    datos = (char*)malloc(num_datos * sizeof(char));
-    int i = 0;
-    while ((caracter = fgetc(archivo_origen)) != EOF) {
-        if (caracter != ',' && caracter != ';') {
-            datos[i] = caracter;
-            i++;
-        }
-    }
-    datos[i] = '\0';  // Agregar el carácter nulo al final del arreglo de datos
-
-    // Ordenar los datos de menor a mayor
-    for (int j = 0; j < num_datos - 1; j++) {
-        for (int k = j + 1; k < num_datos; k++) {
-            if (datos[j] > datos[k]) {
-                char temp = datos[j];
-                datos[j] = datos[k];
-                datos[k] = temp;
-            }
-        }
-    }
-
-    // Guardar los datos ordenados en el archivo de destino
-    for (int j = 0; j < num_datos - 1; j++) {
-        if (datos[j] == ',' || datos[j] == ';') {
-            fputc(' ', archivo_destino);
-        } else {
-            fputc(datos[j], archivo_destino);
-        }
-    }
-    fputc(datos[num_datos - 1], archivo_destino);
-
-    printf("El archivo ha sido copiado y ordenado de menor a mayor correctamente.\n");
-
-    fclose(archivo_origen);
-    fclose(archivo_destino);
-    free(datos);
-}
-
-void ordenarMayorMenor(const char* nombre_origen, const char* nombre_destino) {
-    FILE *archivo_origen, *archivo_destino;
-    char caracter;
-    char* datos;
-    int num_datos = 0;
-
-    archivo_origen = fopen("generacion.csv", "r");
-    if (archivo_origen == NULL) {
-        printf("No se pudo abrir el archivo de origen.\n");
-        return;
-    }
-
-    archivo_destino = fopen("mayormenor.txt", "a");
-    if (archivo_destino == NULL) {
-        printf("No se pudo abrir el archivo de destino.\n");
-        return;
-    }
-
-    // Saltar las primeras 5 filas
-    for (int i = 0; i < 5; i++) {
-        while ((caracter = fgetc(archivo_origen)) != '\n' && caracter != EOF);
-    }
-
-    // Obtener el número de datos en el archivo de origen
-    while ((caracter = fgetc(archivo_origen)) != EOF) {
-        if (caracter == ',' || caracter == ';') {
-            num_datos++;
-        }
-    }
-    num_datos++;  // Sumar uno más para contar el último dato sin coma o punto y coma
-
-    // Volver al inicio del archivo de origen
-    fseek(archivo_origen, 0, SEEK_SET);
-
-    // Saltar las primeras 5 filas
-    for (int i = 0; i < 5; i++) {
-        while ((caracter = fgetc(archivo_origen)) != '\n' && caracter != EOF);
-    }
-
-    // Leer y almacenar los datos en un arreglo
-    datos = (char*)malloc(num_datos * sizeof(char));
-    int i = 0;
-    while ((caracter = fgetc(archivo_origen)) != EOF) {
-        if (caracter != ',' && caracter != ';') {
-            datos[i] = caracter;
-            i++;
-        }
-    }
-    datos[i] = '\0';  // Agregar el carácter nulo al final del arreglo de datos
-
-    // Ordenar los datos de mayor a menor
-    for (int j = 0; j < num_datos - 1; j++) {
-        for (int k = j + 1; k < num_datos; k++) {
-            if (datos[j] < datos[k]) {
-                char temp = datos[j];
-                datos[j] = datos[k];
-                datos[k] = temp;
-            }
-        }
-    }
-
-    // Guardar los datos ordenados en el archivo de destino
-    for (int j = 0; j < num_datos - 1; j++) {
-        if (datos[j] == ',' || datos[j] == ';') {
-            fputc(' ', archivo_destino);
-        } else {
-            fputc(datos[j], archivo_destino);
-        }
-    }
-    fputc(datos[num_datos - 1], archivo_destino);
-
-    printf("El archivo ha sido copiado y ordenado de mayor a menor correctamente.\n");
-
-    fclose(archivo_origen);
-    fclose(archivo_destino);
-    free(datos);
-}
 
 
 

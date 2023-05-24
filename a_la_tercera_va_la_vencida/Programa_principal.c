@@ -29,7 +29,7 @@ void menubusquedafechaenergia(struct fila *,FILE *,FILE *);
 void mostrarenergias(void);
 void agregarDatos(FILE *archivo);
 void mostrarDatos(FILE *archivo);
-
+float funcionmedia(int, Data x[]);
 
 
 //void cadenasindependientes(FILE *, int ,int ,char [][560]);
@@ -47,12 +47,13 @@ int main(){
     char nombre_archivo_menor_mayor[100] = "menormayor.txt";
     struct fila *nfilas; //Declaracion del puntero para reserva de memoria mas adelante
     FILE *archivocompleto, copiabonita,*file,*historial,*archivo; //Declaracion del archivo principal
-
+    char *token;
+    char *prevToken = NULL;
     char line[1000];
     Data data[1000];
     Data2 data2[1000];
     int count = 0;
-
+    float operacionmedia=0;
     while(eleccion!=6)
         {
         menuprincipal();
@@ -326,6 +327,36 @@ int main(){
 
             case 1:
                 printf("aqui va la media de las generaciones\n");
+                mostrarenergias();
+                file = fopen("copiageneracion.csv", "r");
+                            if (file == NULL) {
+                                printf("No se pudo abrir el archivo.\n");
+                                return 1;
+                            }
+
+                            // Leer y procesar cada línea del archivo
+                                while (fgets(line, sizeof(line), file) != NULL && count < 1000) {
+
+
+                                // Buscar la primera coma en la línea
+                                    token = strtok(line, ",");
+                                        while (token != NULL) {
+                                            if (prevToken != NULL) {
+                                            // Convertir la cadena de caracteres a un valor float
+                                            data[count].value = atof(prevToken);
+                                            count++;
+                                            }
+                                        prevToken = token;
+                                        token = strtok(NULL, ",");
+                                        }
+                                }
+
+                            // Cerrar el archivo
+                            fclose(file);
+                            printf("\nSeleccione el tipo de energia:\n");
+                            scanf("%i",&energia);
+                            operacionmedia=funcionmedia(energia,data);
+                            printf("%.5f\n\n",operacionmedia);
 
             case 2:
                 printf("aqui va la desviacion tipica de las generaciones\n");
@@ -500,4 +531,13 @@ void mostrarenergias(void){
     printf("17. Residuos renovables\n");
     printf("18. Generacion total\n");
 }
+float funcionmedia(int energia,Data x[]){
+    int i,dim=24;
+    float media,sumatorio=0;
+    for(i=38+24*energia-24;i<(32+24*energia-24)+24;i++){
+        sumatorio+=x[i].value;
 
+    }
+    media=sumatorio/dim;
+    return media;
+}

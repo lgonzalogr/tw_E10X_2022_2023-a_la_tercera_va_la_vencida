@@ -1,11 +1,12 @@
-# [Título del trabajo]
+# A la tercera va la vencida
 
-[Descripción breve del proyecto a realizar (2-3 frases).]
+Este proyecto trata de leer un documento con las energias producidas por diversos medios, en el curso de dos años. Para mostrarlos
+al usuario, cuandolo solicite.
 
 ## Integrantes del equipo
 
-[Nombres, apellidos, y usuario GitHub de los integrantes del equipo.]
+Alejandro Montero Porras (Alejandro-Montero-Porras)/ Jesús Marín Delgado (jesuppedia).
 
 ## Objetivos del trabajo
 
-[Lista de los objetivos que se persiguen con el trabajo propuesto.]
+Aprender a programar en c y conocer la programación desde un punto de vista práctico enfocado en el desarrollo de proyectos.

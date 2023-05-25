@@ -30,6 +30,7 @@ void mostrarenergias(void);
 void agregarDatos(FILE *archivo);
 void mostrarDatos(FILE *archivo);
 float funcionmedia(int, Data x[]);
+float funcionvarianza(int, Data x[]);
 
 
 //void cadenasindependientes(FILE *, int ,int ,char [][560]);
@@ -54,6 +55,7 @@ int main(){
     Data2 data2[1000];
     int count = 0;
     float operacionmedia=0;
+    float operacionvarianza=0;
     while(eleccion!=6)
         {
         menuprincipal();
@@ -359,7 +361,8 @@ int main(){
                             printf("%.5f\n\n",operacionmedia);
 
             case 2:
-                printf("aqui va la desviacion tipica de las generaciones\n");
+                printf("aqui va la varianza de las generaciones\n");
+;
             }
         }
 
@@ -540,4 +543,22 @@ float funcionmedia(int energia,Data x[]){
     }
     media=sumatorio/dim;
     return media;
+}
+float funciondesvtipica (int energia,Data x[])
+{
+    int i, dim=24;
+    int media;
+    float desvtipica, sumatorios=0;
+    double varianza = 0;
+    for(i=38+24*energia-24;i<(32+24*energia-24)+24;i++) {
+        double diff = energia - media;
+        varianza += diff * diff;
+    }
+        double desvtipicas = 0;
+        if (energia > 1) {
+        varianza /= (energia - 1);
+        desvtipica = sqrt(varianza);
+
+    }
+    return desvtipica;
 }

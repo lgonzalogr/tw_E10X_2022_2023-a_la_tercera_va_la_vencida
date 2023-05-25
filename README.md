@@ -5,7 +5,7 @@ al usuario, cuando este lo solicite, junto con otras funcionalidades de interés
 
 ## Integrantes del equipo
 
-Alejandro Montero Porras (Alejandro-Montero-Porras)/ Jesús Marín Delgado (jesuppedia).
+Ignacio loriente Santana (ignacioloriente)/ Alejandro Montero Porras (Alejandro-Montero-Porras)/ Jesús Marín Delgado (jesuppedia).
 
 ## Objetivos del trabajo
 

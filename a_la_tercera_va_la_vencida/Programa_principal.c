@@ -25,7 +25,7 @@ void mostrardatoscompletos(struct fila *, FILE *, int);
 
 void menubusqueda(void);
 void menubusquedafecha(struct fila *,FILE *);
-void datosindependientes(FILE *,struct datos *,struct datos *);
+
 void menubusquedafechaenergia(struct fila *,FILE *,FILE *);
 void mostrarenergias(void);
 void agregarDatos(FILE *archivo);
@@ -45,7 +45,7 @@ int main(){
 
     char nombre_archivo_destino[100] = "copiageneracion.csv";
     struct fila *nfilas; //Declaracion del puntero para reserva de memoria mas adelante
-    FILE *archivocompleto,*file,*historial,*archivo; //Declaracion del archivo principal
+    FILE *archivocompleto,*file,*historial; //Declaracion del archivo principal
     char *token;
     char *prevToken = NULL;
     char line[1000];

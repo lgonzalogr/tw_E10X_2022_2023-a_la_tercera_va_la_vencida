@@ -359,7 +359,7 @@ int main(){
                             scanf("%i",&energia);
                             operacionmedia=funcionmedia(energia,data);
                             printf("%.5f\n\n",operacionmedia);
-
+            break;
             case 2:
                 printf("aqui va la desviacion tipica de las generaciones\n");
                  mostrarenergias();
@@ -565,11 +565,11 @@ void mostrarenergias(void){
     printf("18. Generacion total\n");
 }
 float funcionmedia(int energia,Data x[]){
-    int i,dim=24;
+    int i=0,dim=24;
     float media,sumatorio=0;
-    for(i=38+24*energia-24;i<(32+24*energia-24)+24;i++){
+    for(i=38+26*energia-26;i<(38+26*energia-26)+24;i++){
         sumatorio+=x[i].value;
-
+        printf("Posicion %i: %.2f\n",i,x[i].value);
     }
     media=sumatorio/dim;
     return media;

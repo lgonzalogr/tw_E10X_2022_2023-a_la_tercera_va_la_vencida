@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<math.h>
 struct DatosEnergia {
     char tipodeenergia[100];
     double consumo;
@@ -30,24 +31,21 @@ void mostrarenergias(void);
 void agregarDatos(FILE *archivo);
 void mostrarDatos(FILE *archivo);
 float funcionmedia(int, Data x[]);
-float funciondesvtipica(int, Data x[]);
+double funciondesvtipica(int, Data x[]);
 
 
 //void cadenasindependientes(FILE *, int ,int ,char [][560]);
 int main(){
     int eleccion,eleccionbusqueda,eleccion2,eleccionmasdatos;
-    int i=0,j,n=0,ncomas=0,year,mes,energia;
-    int contador=0;
-    int operador1=0,operador2=0;
+    int i=0,n=0,ncomas=0,year,mes,energia;
+
+    int operador1=0;
     char c,comas;
     char caracter;
-    char filasindependientes[1000];
-    char nombre_archivo_origen[100] = "generacion.csv";
+
     char nombre_archivo_destino[100] = "copiageneracion.csv";
-    char nombre_archivo_mayor_menor[100] = "mayormenor.txt";
-    char nombre_archivo_menor_mayor[100] = "menormayor.txt";
     struct fila *nfilas; //Declaracion del puntero para reserva de memoria mas adelante
-    FILE *archivocompleto, copiabonita,*file,*historial,*archivo; //Declaracion del archivo principal
+    FILE *archivocompleto,*file,*historial,*archivo; //Declaracion del archivo principal
     char *token;
     char *prevToken = NULL;
     char line[1000];
@@ -361,7 +359,7 @@ int main(){
                             printf("%.5f\n\n",operacionmedia);
             break;
             case 2:
-                printf("aqui va la desviacion tipica de las generaciones\n");
+
                  mostrarenergias();
                 file = fopen("copiageneracion.csv", "r");
                             if (file == NULL) {
@@ -401,7 +399,7 @@ int main(){
                     historial=fopen("historial.csv","r");
                     if (historial == NULL) {
                         printf("No se pudo abrir el archivo.\n");
-                        return;
+                        return 1;
                     }
 
                     while ((caracter = fgetc(historial)) != EOF) {
@@ -510,7 +508,7 @@ void menubusquedafechaenergia(struct fila *filafechas,FILE *fechas,FILE *histori
     fechas=fopen("copiageneracion.csv","r");
     historial=fopen("historial.csv","a");
     int i,numero;
-    char caracter;
+
     printf("Seleccione con el numero el tipo de energia:\n");
     printf("1. Hidraulica\n");
     printf("2. Turbinacion bombeo\n");
@@ -569,25 +567,30 @@ float funcionmedia(int energia,Data x[]){
     float media,sumatorio=0;
     for(i=38+26*energia-26;i<(38+26*energia-26)+24;i++){
         sumatorio+=x[i].value;
-        printf("Posicion %i: %.2f\n",i,x[i].value);
+        //printf("Posicion %i: %.2f\n",i,x[i].value); Comprobación
     }
     media=sumatorio/dim;
     return media;
 }
-float funciondesvtipica (int energia,Data x[])
+double funciondesvtipica (int energia,Data x[])
 {
     int i, dim=24;
     int media;
-    float desvtipica, sumatorios=0;
-    double varianza = 0;
-    for(i=38+24*energia-24;i<(32+24*energia-24)+24;i++) {
-        sumatorios+=x[i].value;
-        double diff = sumatorios*(sqrt(energia - media));
-        varianza += diff / dim;
+    float sumatorio=0;
+    double varianza = 0,diff=0,potencia=0,desvtipica=0;
+    for(i=38+26*energia-26;i<(38+26*energia-26)+24;i++){
+        sumatorio+=x[i].value;
+        //printf("Posicion %i: %.2f\n",i,x[i].value); Comprobación
     }
-        double desvtipicas = 0;
-        if (energia > 1) {
-        varianza /= (energia - 1);
+    media=sumatorio/dim;
+    for(i=38+26*energia-26;i<(32+26*energia-26)+24;i++) {
+            diff=x[i].value-media;
+            potencia+=pow(diff,2);
+//        double diff = sumatorio*(sqrt(energia - media));
+//        varianza += diff / dim;
+    }
+        varianza=potencia/dim;
+        if (energia >= 1) {
         desvtipica = sqrt(varianza);
 
     }

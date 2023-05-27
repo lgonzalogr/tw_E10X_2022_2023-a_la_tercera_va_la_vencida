@@ -54,7 +54,7 @@ int main(){
     int count = 0;
     float operacionmedia=0;
     float operaciondesvtipica=0;
-    while(eleccion!=6)
+    while(eleccion!=5)
         {
         menuprincipal();
 
@@ -81,12 +81,7 @@ int main(){
                 mostrarDatosCompletos(nombre_archivo_destino);
                 //rewind(nombre_archivo_destino);
                 //funcionhistorial(historial,archivocompleto);
-                archivocompleto=fopen("generacion.csv","r");
-                while((caracter = fgetc(archivocompleto)) != EOF){
-                    putc(caracter,historial);
-                }
-                fclose(historial);
-                fclose(archivocompleto);
+
                 break;
 
 
@@ -229,97 +224,8 @@ int main(){
 
                     }
                 break;
-                case 3:
-                    while(eleccionmasdatos!=4){
-                    printf("Introduzca la opcion deseada:\n\n");
-                    printf("1. Añadir nueva generacion de energia:\n");
-                    printf("2. Añadir nuevos datos a las energias ya existentes:\n");
-                    printf("3. Ver datos:\n");
-                    printf("4. Volver:\n");
-                    scanf("%i",&eleccionmasdatos);
-                    switch(eleccionmasdatos){
-                    case 1:
-                        archivo=fopen("generacionmasdatos.csv","a");
-                        if (archivo == NULL) {
-                            printf("No se pudo abrir el archivo.\n");
-                        return 1;
-                        }
-                        while ((caracter = fgetc(archivo)) != EOF) {
-                        i=0;
-                        i++;
-                        }
-                        printf("%i",i);
-                        fclose(archivo);
-                        break;
-                    case 2:
-                        break;
-                    }
-                    }
-//                    {
-//                    printf("Seleccione los datos que desea añadir:\n");
-//                    archivo=fopen("generacionmasdatos.csv","w");
-//
-//{
-//    struct DatosEnergia nuevoDato;
-//    printf("Ingrese el tipo de energia: ");
-//    scanf("%s", nuevoDato.tipodeenergia);
-//    printf("Ingrese el consumo de energía: ");
-//    scanf("%lf", &nuevoDato.consumo);
-//
-//    fprintf(archivo, "%s %.2lf\n", nuevoDato.tipodeenergia, nuevoDato.consumo);
-//
-//    printf("Datos agregados correctamente.\n");
-//}
-//
-//void mostrarDatos(FILE *archivo) {
-//    printf("Distribución de energía de la red eléctrica española:\n");
-//    struct DatosEnergia dato;
-//
-//    while (fscanf(archivo, "%s %lf", dato.tipodeenergia, &dato.consumo) == 2) {
-//        printf("tipo de energia: %s, Consumo: %.2lf\n", dato.tipodeenergia, dato.consumo);
-//    }
-//}
-//
-//int bain() {
-//    int opcion;
-//    FILE *archivo = fopen("datos_energia.txt", "a+");
-//
-//    if (archivo == NULL) {
-//        printf("Error al abrir el archivo.\n");
-//        return 1;
-//    }
-//
-//    do {
-//        printf("1. Agregar datos\n");
-//        printf("2. Mostrar datos\n");
-//        printf("0. Salir\n");
-//        printf("Seleccione una opción: ");
-//        scanf("%d", &opcion);
-//
-//        switch (opcion) {
-//            case 1:
-//                agregarDatos(archivo);
-//                break;
-//            case 2:
-//                mostrarDatos(archivo);
-//                break;
-//            case 0:
-//                printf("Saliendo del programa.\n");
-//                break;
-//            default:
-//                printf("Opción inválida. Intente nuevamente.\n");
-//                break;
-//        }
-//    } while (opcion != 0);
-//
-//    fclose(archivo);
-//
-//    return 0;
-//}
-//                    }
 
-                break;
-    case 4:
+    case 3:
         {
             printf("Seleccione la operación estadistica que desea: media (1) o desviacion tipica(2)\n");
             scanf("%i",&eleccion2);
@@ -353,10 +259,13 @@ int main(){
 
                             // Cerrar el archivo
                             fclose(file);
+                            historial=fopen("historial.csv","a");
                             printf("\nSeleccione el tipo de energia:\n");
                             scanf("%i",&energia);
                             operacionmedia=funcionmedia(energia,data);
                             printf("%.5f\n\n",operacionmedia);
+                            fprintf(historial,"%.5f\n\n",operacionmedia);
+                            fclose(historial);
             break;
             case 2:
 
@@ -386,16 +295,19 @@ int main(){
 
                             // Cerrar el archivo
                             fclose(file);
+                            historial=fopen("historial.csv","a");
                             printf("\nSeleccione el tipo de energia:\n");
                             scanf("%i",&energia);
                             operaciondesvtipica=funciondesvtipica(energia,data);
                             printf("%.5f\n\n",operaciondesvtipica);
-;
+                            fprintf(historial,"%.5f\n\n",operaciondesvtipica);
+                            fclose(historial);
+
             }
         }
 
         break;
-                case 5:
+                case 4:
                     historial=fopen("historial.csv","r");
                     if (historial == NULL) {
                         printf("No se pudo abrir el archivo.\n");
@@ -475,10 +387,9 @@ void menuprincipal(void){
     printf("Introduzca el numero indicado para acceder a la opción:\n\n");
     printf("\t1.\tVer datos completos.\n");
     printf("\t2.\tBusqueda de datos.\n");
-    printf("\t3.\tAñadir datos.\n");
-    printf("\t4.\tEstadísticas del archivo.\n");
-    printf("\t5.\tHistorial.\n");
-    printf("\t6.\tCerrar el programa.\n");
+    printf("\t3.\tEstadísticas del archivo.\n");
+    printf("\t4.\tHistorial.\n");
+    printf("\t5.\tCerrar el programa.\n");
 }
 
 

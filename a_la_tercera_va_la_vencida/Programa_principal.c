@@ -9,23 +9,18 @@ struct DatosEnergia {
 struct fila{
     char filascompletas[432];
 };
-
 struct Data {
     float value;
     char tipo;
 };
-
 struct Data2 {
     char value[1000];
 };
-
 void menuprincipal(void);
 void copiarArchivoModificado(const char* nombre_origen, const char* nombre_destino);
 void mostrardatoscompletos(struct fila *, FILE *, int);
-
 void menubusqueda(void);
 void menubusquedafecha(struct fila *,FILE *);
-
 void menubusquedafechaenergia(struct fila *,FILE *,FILE *);
 void mostrarenergias(void);
 void agregarDatos(FILE *archivo);
@@ -33,16 +28,13 @@ void mostrarDatos(FILE *archivo);
 float funcionmedia(int, struct Data x[]);
 double funciondesvtipica(int,struct Data x[]);
 
-
 //void cadenasindependientes(FILE *, int ,int ,char [][560]);
 int main(){
     int eleccion,eleccionbusqueda,eleccion2;
     int i=0,n=0,ncomas=0,year,mes,energia;
-
     int operador1=0;
     char c,comas;
     char caracter;
-
     char nombre_archivo_destino[100] = "copiageneracion.csv";
     struct fila *nfilas; //Declaracion del puntero para reserva de memoria mas adelante
     FILE *archivocompleto,*file,*historial; //Declaracion del archivo principal
@@ -72,21 +64,13 @@ int main(){
                     nfilas=(struct fila*)malloc(n*sizeof(struct fila));
                     fclose(archivocompleto);
             switch(eleccion){
-
-
-
                 case 1:
                 printf("\n\n\t1.\tVer datos completos.\n"); // comprobacion
                 //copiarArchivoModificado(nombre_archivo_origen, nombre_archivo_destino);
                 mostrarDatosCompletos(nombre_archivo_destino);
                 //rewind(nombre_archivo_destino);
                 //funcionhistorial(historial,archivocompleto);
-
                 break;
-
-
-
-
                 case 2:
                 while(eleccionbusqueda!=4){
                     printf("Seleccione el tipo de busqueda que desea:\n");
@@ -107,35 +91,28 @@ int main(){
                                 printf("No se pudo abrir el archivo.\n");
                                 return 1;
                             }
-
                             // Leer y procesar cada línea del archivo
                                 while (fgets(line, sizeof(line), file) != NULL && count < 1000) {
                                     char *token;
                                     char *prevToken = NULL;
-
                                 // Buscar la primera coma en la línea
                                     token = strtok(line, ",");
                                         while (token != NULL) {
                                             if (prevToken != NULL) {
                                             // Convertir la cadena de caracteres a un valor float
                                             data[count].value = atof(prevToken);
-
                                             // Almacenar el valor anterior a la coma en la estructura correspondiente
                                             strcpy(data2[count].value, prevToken);
-
                                             count++;
                                             }
                                         prevToken = token;
                                         token = strtok(NULL, ",");
                                         }
                                 }
-
                             // Cerrar el archivo
                             fclose(file);
-
                             // Mostrar los valores almacenados en el vector de estructuras
                             historial=fopen("historial.csv","a");
-
                             for (i = 32; i < 324; i += 25) {
                             printf("%s \t", data2[i].value);
                             fputs(data2[i].value,historial);
@@ -158,11 +135,9 @@ int main(){
                             printf("\n\n\n\n");
                         fclose(historial);
                         break;
-
                         case 2:
                             menubusquedafechaenergia(nfilas,archivocompleto,historial);
                         break;
-
                         case 3:
                             printf("Indique el año: 21 o 22?\n");
                             scanf("%i",&year);
@@ -173,13 +148,13 @@ int main(){
                             scanf("%i",&energia);
                             if(year==22){
                                 operador1=12;
-                            }else operador1=0;
+                            }
+                            else operador1=0;
                             file = fopen("copiageneracion.csv", "r");
                             if (file == NULL) {
                                 printf("No se pudo abrir el archivo.\n");
                                 return 1;
                             }
-
                             // Leer y procesar cada línea del archivo
                                 while (fgets(line, sizeof(line), file) != NULL && count < 1000) {
                                     char *token;
@@ -191,20 +166,16 @@ int main(){
                                             if (prevToken != NULL) {
                                             // Convertir la cadena de caracteres a un valor float
                                             data[count].value = atof(prevToken);
-
                                             // Almacenar el valor anterior a la coma en la estructura correspondiente
                                             strcpy(data2[count].value, prevToken);
-
                                             count++;
                                             }
                                         prevToken = token;
                                         token = strtok(NULL, ",");
                                         }
                                 }
-
                             // Cerrar el archivo
                             fclose(file);
-
                             // Mostrar los valores almacenados en el vector de estructuras
                             historial=fopen("historial.csv","a");
                             for (i = 32+25*energia-25; i <=32+25*energia-25 ; i ++) {
@@ -220,17 +191,13 @@ int main(){
 
                      break;
                     }
-
-
                     }
                 break;
-
     case 3:
         {
             printf("Seleccione la operación estadistica que desea: media (1) o desviacion tipica(2)\n");
             scanf("%i",&eleccion2);
             switch (eleccion2){
-
             case 1:
                 printf("aqui va la media de las generaciones\n");
                 mostrarenergias();
@@ -239,11 +206,8 @@ int main(){
                                 printf("No se pudo abrir el archivo.\n");
                                 return 1;
                             }
-
                             // Leer y procesar cada línea del archivo
                                 while (fgets(line, sizeof(line), file) != NULL && count < 1000) {
-
-
                                 // Buscar la primera coma en la línea
                                     token = strtok(line, ",");
                                         while (token != NULL) {
@@ -256,7 +220,6 @@ int main(){
                                         token = strtok(NULL, ",");
                                         }
                                 }
-
                             // Cerrar el archivo
                             fclose(file);
                             historial=fopen("historial.csv","a");
@@ -268,14 +231,12 @@ int main(){
                             fclose(historial);
             break;
             case 2:
-
                  mostrarenergias();
                 file = fopen("copiageneracion.csv", "r");
                             if (file == NULL) {
                                 printf("No se pudo abrir el archivo.\n");
                                 return 1;
                             }
-
                             // Leer y procesar cada línea del archivo
                                 while (fgets(line, sizeof(line), file) != NULL && count < 1000) {
 
@@ -292,7 +253,6 @@ int main(){
                                         token = strtok(NULL, ",");
                                         }
                                 }
-
                             // Cerrar el archivo
                             fclose(file);
                             historial=fopen("historial.csv","a");
@@ -302,7 +262,6 @@ int main(){
                             printf("%.5f\n\n",operaciondesvtipica);
                             fprintf(historial,"%.5f\n\n",operaciondesvtipica);
                             fclose(historial);
-
             }
         }
 
@@ -313,21 +272,13 @@ int main(){
                         printf("No se pudo abrir el archivo.\n");
                         return 1;
                     }
-
                     while ((caracter = fgetc(historial)) != EOF) {
                         printf("%c", caracter);
                     }
                     fclose(historial);
                 break;
-
             }
-
-
         }
-
-
-
-
 
     return 0;
 }

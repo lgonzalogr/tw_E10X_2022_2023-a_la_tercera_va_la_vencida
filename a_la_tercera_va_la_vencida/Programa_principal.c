@@ -10,14 +10,14 @@ struct fila{
     char filascompletas[432];
 };
 
-typedef struct {
+struct Data {
     float value;
     char tipo;
-} Data;
+};
 
-typedef struct {
+struct Data2 {
     char value[1000];
-} Data2;
+};
 
 void menuprincipal(void);
 void copiarArchivoModificado(const char* nombre_origen, const char* nombre_destino);
@@ -30,13 +30,13 @@ void menubusquedafechaenergia(struct fila *,FILE *,FILE *);
 void mostrarenergias(void);
 void agregarDatos(FILE *archivo);
 void mostrarDatos(FILE *archivo);
-float funcionmedia(int, Data x[]);
-double funciondesvtipica(int, Data x[]);
+float funcionmedia(int, struct Data x[]);
+double funciondesvtipica(int,struct Data x[]);
 
 
 //void cadenasindependientes(FILE *, int ,int ,char [][560]);
 int main(){
-    int eleccion,eleccionbusqueda,eleccion2,eleccionmasdatos;
+    int eleccion,eleccionbusqueda,eleccion2;
     int i=0,n=0,ncomas=0,year,mes,energia;
 
     int operador1=0;
@@ -49,8 +49,8 @@ int main(){
     char *token;
     char *prevToken = NULL;
     char line[1000];
-    Data data[1000];
-    Data2 data2[1000];
+    struct Data data[1000];
+    struct Data2 data2[1000];
     int count = 0;
     float operacionmedia=0;
     float operaciondesvtipica=0;
@@ -473,7 +473,7 @@ void mostrarenergias(void){
     printf("17. Residuos renovables\n");
     printf("18. Generacion total\n");
 }
-float funcionmedia(int energia,Data x[]){
+float funcionmedia(int energia,struct Data x[]){
     int i=0,dim=24;
     float media,sumatorio=0;
     for(i=38+26*energia-26;i<(38+26*energia-26)+24;i++){
@@ -483,7 +483,7 @@ float funcionmedia(int energia,Data x[]){
     media=sumatorio/dim;
     return media;
 }
-double funciondesvtipica (int energia,Data x[])
+double funciondesvtipica (int energia,struct Data x[])
 {
     int i, dim=24;
     int media;

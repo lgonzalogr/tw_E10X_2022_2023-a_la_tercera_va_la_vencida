@@ -362,7 +362,6 @@ void menubusquedafechaenergia(struct fila *filafechas,FILE *fechas,FILE *histori
     fechas=fopen("copiageneracion.csv","r");
     historial=fopen("historial.csv","a");
     int i,numero;
-
     printf("Seleccione con el numero el tipo de energia:\n");
     printf("1. Hidraulica\n");
     printf("2. Turbinacion bombeo\n");
@@ -387,7 +386,6 @@ void menubusquedafechaenergia(struct fila *filafechas,FILE *fechas,FILE *histori
         fgets(filafechas[i].filascompletas,sizeof(filafechas[i].filascompletas),fechas);
     }
     for(i=4+numero;i<=4+numero;i++){
-
 	printf ("%s\n",filafechas[i].filascompletas);
 	fputs(filafechas[i].filascompletas,historial);
     fclose(fechas);
@@ -416,6 +414,7 @@ void mostrarenergias(void){
     printf("17. Residuos renovables\n");
     printf("18. Generacion total\n");
 }
+
 float funcionmedia(int energia,struct Data x[]){
     int i=0,dim=24;
     float media,sumatorio=0;
@@ -426,6 +425,7 @@ float funcionmedia(int energia,struct Data x[]){
     media=sumatorio/dim;
     return media;
 }
+
 double funciondesvtipica (int energia,struct Data x[])
 {
     int i, dim=24;
@@ -434,19 +434,18 @@ double funciondesvtipica (int energia,struct Data x[])
     double varianza = 0,diff=0,potencia=0,desvtipica=0;
     for(i=38+26*energia-26;i<(38+26*energia-26)+24;i++){
         sumatorio+=x[i].value;
-        //printf("Posicion %i: %.2f\n",i,x[i].value); Comprobación
+    //printf("Posicion %i: %.2f\n",i,x[i].value); Comprobación
     }
     media=sumatorio/dim;
     for(i=38+26*energia-26;i<(32+26*energia-26)+24;i++) {
             diff=x[i].value-media;
             potencia+=pow(diff,2);
-//        double diff = sumatorio*(sqrt(energia - media));
-//        varianza += diff / dim;
+    //double diff = sumatorio*(sqrt(energia - media));
+    //varianza += diff / dim;
     }
         varianza=potencia/dim;
         if (energia >= 1) {
         desvtipica = sqrt(varianza);
-
     }
     return desvtipica;
 }

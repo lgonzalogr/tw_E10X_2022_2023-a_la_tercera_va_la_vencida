@@ -264,7 +264,6 @@ int main(){
                             fclose(historial);
             }
         }
-
         break;
                 case 4:
                     historial=fopen("historial.csv","r");
@@ -279,10 +278,8 @@ int main(){
                 break;
             }
         }
-
     return 0;
 }
-
 
 void mostrarDatosCompletos(const char* nombre_archivo) {
     FILE* archivo = fopen("archivo_mas_bonito.csv", "r");
@@ -325,13 +322,10 @@ void copiarArchivoModificado(const char* nombre_origen, const char* nombre_desti
             fputc(caracter, archivo_destino);
         }
     }
-
     printf("El archivo ha sido copiado y modificado correctamente.\n");
-
     fclose(archivo_origen);
     fclose(archivo_destino);
 }
-
 
 void menuprincipal(void){
     printf("\t\t\tMENU PRINCIPAL\n\n");
@@ -343,15 +337,13 @@ void menuprincipal(void){
     printf("\t5.\tCerrar el programa.\n");
 }
 
-
-
-
 void menubusqueda(void){
     printf("\t1.\tFecha.");
     printf("\t2.\tEnergia.");
     printf("\t3.\tFecha y energia.");
     printf("\t4.\tVolver al menu.");
 }
+
 void menubusquedafecha(struct fila *filafechas,FILE *fechas){
     fechas=fopen("generacion.csv","r");
 

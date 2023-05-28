@@ -332,7 +332,7 @@ void menuprincipal(void){
     printf("Introduzca el numero indicado para acceder a la opción:\n\n");
     printf("\t1.\tVer datos completos.\n");
     printf("\t2.\tBusqueda de datos.\n");
-    printf("\t3.\tEstadísticas del archivo.\n");
+    printf("\t3.\tEstadisticas del archivo.\n");
     printf("\t4.\tHistorial.\n");
     printf("\t5.\tCerrar el programa.\n");
 }
@@ -362,7 +362,7 @@ void menubusquedafechaenergia(struct fila *filafechas,FILE *fechas,FILE *histori
     fechas=fopen("copiageneracion.csv","r");
     historial=fopen("historial.csv","a");
     int i,numero;
-    printf("Seleccione con el numero el tipo de energia:\n");
+    printf("Seleccione con el numero el tipo de energia del que quiere ver los datos:\n");
     printf("1. Hidraulica\n");
     printf("2. Turbinacion bombeo\n");
     printf("3. Nuclear\n");
@@ -394,7 +394,7 @@ void menubusquedafechaenergia(struct fila *filafechas,FILE *fechas,FILE *histori
 }
 
 void mostrarenergias(void){
-    printf("Seleccione con el numero el tipo de energia:\n");
+    printf("Seleccione con el numero el tipo de energia del que quiere ver los datos:\n");
     printf("1. Hidraulica\n");
     printf("2. Turbinacion bombeo\n");
     printf("3. Nuclear\n");

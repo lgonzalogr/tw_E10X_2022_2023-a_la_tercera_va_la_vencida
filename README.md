@@ -1,7 +1,7 @@
 # A la tercera va la vencida
 
 Este proyecto trata de leer un documento con las energias producidas por diversos medios, en el transcurso de dos años. Para mostrarlos
-al usuario, cuando este lo solicite, junto con otras funcionalidades de interés.
+al usuario cuando lo solicite imprimiendolos por pantalla junto con otras funcionalidades de interés.
 
 ## Integrantes del equipo
 

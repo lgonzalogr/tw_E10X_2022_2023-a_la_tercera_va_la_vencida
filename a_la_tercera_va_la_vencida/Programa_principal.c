@@ -90,20 +90,20 @@ int main(){
                             }else operador1=0;
                             file = fopen("copiageneracion.csv", "r");
                             if (file == NULL) {
-                                printf("No se pudo abrir el archivo.\n");
+                                printf("Error, no se puede abrir el archivo.\n");
                                 return 1;
                             }
-                            // Leer y procesar cada línea del archivo
+                            // Ahora con esto leeremos y procesaremos cada linea del archivo.
                                 while (fgets(line, sizeof(line), file) != NULL && count < 1000) {
                                     char *token;
                                     char *prevToken = NULL;
-                                // Buscar la primera coma en la línea
+                                // Esto buscara la primera coma del comando.
                                     token = strtok(line, ",");
                                         while (token != NULL) {
                                             if (prevToken != NULL) {
-                                            // Convertir la cadena de caracteres a un valor float
+                                            // Este codigo covierte la cadena de caracteres en un valor double.
                                             data[count].value = atof(prevToken);
-                                            // Almacenar el valor anterior a la coma en la estructura correspondiente
+                                            // Ahora se almacena en la memoria el valor anterior a la coma en la estructura correspondiente.
                                             strcpy(data2[count].value, prevToken);
                                             count++;
                                             }

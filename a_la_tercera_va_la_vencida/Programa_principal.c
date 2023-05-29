@@ -141,11 +141,11 @@ int main(){
                             menubusquedafechaenergia(nfilas,archivocompleto,historial);
                         break;
                         case 3:
-                            printf("Indique el año: 21 o 22?\n");
+                            printf("Introduca por teclado el año: 21 o 22?\n");
                             scanf("%i",&year);
-                            printf("Indique el mes: 1,2,3,...,12\n");
+                            printf("Introduzca por teclado el mes: 1,2,3,...,12\n");
                             scanf("%i",&mes);
-                            printf("Indique el tipo de energia:\n");
+                            printf("Introduzca que tipo de energía es:\n");
                             mostrarenergias();
                             scanf("%i",&energia);
                             if(year==22){
@@ -154,15 +154,15 @@ int main(){
                             else operador1=0;
                             file = fopen("copiageneracion.csv", "r");
                             if (file == NULL) {
-                                printf("No se pudo abrir el archivo.\n");
+                                printf("Error, no se ha podido abrir el archivo.\n");
                                 return 1;
                             }
-                            // Leer y procesar cada línea del archivo
+                            // Con este codigo lee y procesa cada linea del archivo en cuestión.
                                 while (fgets(line, sizeof(line), file) != NULL && count < 1000) {
                                     char *token;
                                     char *prevToken = NULL;
 
-                                // Buscar la primera coma en la línea
+                                // Con este código busca la primera linea del comando.
                                     token = strtok(line, ",");
                                         while (token != NULL) {
                                             if (prevToken != NULL) {

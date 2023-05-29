@@ -197,24 +197,24 @@ int main(){
                 break;
     case 3:
         {
-            printf("Seleccione la operación estadistica que desea: media (1) o desviacion tipica(2)\n");
+            printf("introduzca el número asignado a la operacion estadística que quiera: media (1) o desviacion tipica(2)\n");
             scanf("%i",&eleccion2);
             switch (eleccion2){
             case 1:
-                printf("aqui va la media de las generaciones\n");
+                printf("La media de las generaciones\n");
                 mostrarenergias();
                 file = fopen("copiageneracion.csv", "r");
                             if (file == NULL) {
-                                printf("No se pudo abrir el archivo.\n");
+                                printf("Error, no se ha podido abrir el archivo.\n");
                                 return 1;
                             }
-                            // Leer y procesar cada línea del archivo
+                            // El comando en cuestion lee y procesa.
                                 while (fgets(line, sizeof(line), file) != NULL && count < 1000) {
-                                // Buscar la primera coma en la línea
+                                // Con este codigo busca la primera coma del comando
                                     token = strtok(line, ",");
                                         while (token != NULL) {
                                             if (prevToken != NULL) {
-                                            // Convertir la cadena de caracteres a un valor float
+                                            // Con este codigo convertimos la cadena de caracteres (char) a un valor de de tipo float. 
                                             data[count].value = atof(prevToken);
                                             count++;
                                             }
@@ -222,10 +222,10 @@ int main(){
                                         token = strtok(NULL, ",");
                                         }
                                 }
-                            // Cerrar el archivo
+                            // Se cierra el archivo
                             fclose(file);
                             historial=fopen("historial.csv","a");
-                            printf("\nSeleccione el tipo de energia:\n");
+                            printf("\nIntroduzca por teclado el tipo de energia que desee:\n");
                             scanf("%i",&energia);
                             operacionmedia=funcionmedia(energia,data);
                             printf("%.5f\n\n",operacionmedia);
@@ -236,7 +236,7 @@ int main(){
                  mostrarenergias();
                 file = fopen("copiageneracion.csv", "r");
                             if (file == NULL) {
-                                printf("No se pudo abrir el archivo.\n");
+                                printf("Error, no se ha podido abrir el archivo\n");
                                 return 1;
                             }
                             // Leer y procesar cada línea del archivo

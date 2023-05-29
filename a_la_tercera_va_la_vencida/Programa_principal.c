@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include<math.h>
+#imclude <locale.h>
 struct DatosEnergia {
     char tipodeenergia[100];
     double consumo;
@@ -30,6 +31,7 @@ double funciondesvtipica(int,struct Data x[]);
 
 //void cadenasindependientes(FILE *, int ,int ,char [][560]);
 int main(){
+    setlocale(LC_CTYPE;"Spanish");
     int eleccion,eleccionbusqueda,eleccion2;
     int i=0,n=0,ncomas=0,year,mes,energia;
     int operador1=0;
@@ -79,7 +81,7 @@ int main(){
                     switch(eleccionbusqueda){
                         case 1:
                             menubusquedafecha(nfilas,archivocompleto);
-                            printf("Indique el año: 21 o 22?\n");
+                            printf("Indique el aÃ±o: 21 o 22?\n");
                             scanf("%i",&year);
                             printf("Indique el mes: 1,2,3,...,12\n");
                             scanf("%i",&mes);
@@ -91,11 +93,11 @@ int main(){
                                 printf("No se pudo abrir el archivo.\n");
                                 return 1;
                             }
-                            // Leer y procesar cada línea del archivo
+                            // Leer y procesar cada lÃ­nea del archivo
                                 while (fgets(line, sizeof(line), file) != NULL && count < 1000) {
                                     char *token;
                                     char *prevToken = NULL;
-                                // Buscar la primera coma en la línea
+                                // Buscar la primera coma en la lÃ­nea
                                     token = strtok(line, ",");
                                         while (token != NULL) {
                                             if (prevToken != NULL) {
@@ -139,7 +141,7 @@ int main(){
                             menubusquedafechaenergia(nfilas,archivocompleto,historial);
                         break;
                         case 3:
-                            printf("Indique el año: 21 o 22?\n");
+                            printf("Indique el aÃ±o: 21 o 22?\n");
                             scanf("%i",&year);
                             printf("Indique el mes: 1,2,3,...,12\n");
                             scanf("%i",&mes);
@@ -155,12 +157,12 @@ int main(){
                                 printf("No se pudo abrir el archivo.\n");
                                 return 1;
                             }
-                            // Leer y procesar cada línea del archivo
+                            // Leer y procesar cada lÃ­nea del archivo
                                 while (fgets(line, sizeof(line), file) != NULL && count < 1000) {
                                     char *token;
                                     char *prevToken = NULL;
 
-                                // Buscar la primera coma en la línea
+                                // Buscar la primera coma en la lÃ­nea
                                     token = strtok(line, ",");
                                         while (token != NULL) {
                                             if (prevToken != NULL) {
@@ -195,7 +197,7 @@ int main(){
                 break;
     case 3:
         {
-            printf("Seleccione la operación estadistica que desea: media (1) o desviacion tipica(2)\n");
+            printf("Seleccione la operaciÃ³n estadistica que desea: media (1) o desviacion tipica(2)\n");
             scanf("%i",&eleccion2);
             switch (eleccion2){
             case 1:
@@ -206,9 +208,9 @@ int main(){
                                 printf("No se pudo abrir el archivo.\n");
                                 return 1;
                             }
-                            // Leer y procesar cada línea del archivo
+                            // Leer y procesar cada lÃ­nea del archivo
                                 while (fgets(line, sizeof(line), file) != NULL && count < 1000) {
-                                // Buscar la primera coma en la línea
+                                // Buscar la primera coma en la lÃ­nea
                                     token = strtok(line, ",");
                                         while (token != NULL) {
                                             if (prevToken != NULL) {
@@ -237,11 +239,11 @@ int main(){
                                 printf("No se pudo abrir el archivo.\n");
                                 return 1;
                             }
-                            // Leer y procesar cada línea del archivo
+                            // Leer y procesar cada lÃ­nea del archivo
                                 while (fgets(line, sizeof(line), file) != NULL && count < 1000) {
 
 
-                                // Buscar la primera coma en la línea
+                                // Buscar la primera coma en la lÃ­nea
                                     token = strtok(line, ",");
                                         while (token != NULL) {
                                             if (prevToken != NULL) {
@@ -329,7 +331,7 @@ void copiarArchivoModificado(const char* nombre_origen, const char* nombre_desti
 
 void menuprincipal(void){
     printf("\t\t\tMENU PRINCIPAL\n\n");
-    printf("Introduzca el numero indicado para acceder a la opción:\n\n");
+    printf("Introduzca el numero indicado para acceder a la opciÃ³n:\n\n");
     printf("\t1.\tVer datos completos.\n");
     printf("\t2.\tBusqueda de datos.\n");
     printf("\t3.\tEstadisticas del archivo.\n");
@@ -420,7 +422,7 @@ float funcionmedia(int energia,struct Data x[]){
     float media,sumatorio=0;
     for(i=38+26*energia-26;i<(38+26*energia-26)+24;i++){
         sumatorio+=x[i].value;
-        //printf("Posicion %i: %.2f\n",i,x[i].value); Comprobación
+        //printf("Posicion %i: %.2f\n",i,x[i].value); ComprobaciÃ³n
     }
     media=sumatorio/dim;
     return media;
@@ -434,7 +436,7 @@ double funciondesvtipica (int energia,struct Data x[])
     double varianza = 0,diff=0,potencia=0,desvtipica=0;
     for(i=38+26*energia-26;i<(38+26*energia-26)+24;i++){
         sumatorio+=x[i].value;
-    //printf("Posicion %i: %.2f\n",i,x[i].value); Comprobación
+    //printf("Posicion %i: %.2f\n",i,x[i].value); ComprobaciÃ³n
     }
     media=sumatorio/dim;
     for(i=38+26*energia-26;i<(32+26*energia-26)+24;i++) {

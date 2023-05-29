@@ -54,12 +54,12 @@ int main(){
 
             scanf("%i",&eleccion);
             archivocompleto=fopen("generacion.csv","r");
-                    while(!feof(archivocompleto)){ //Se cuenta el numero de filas
+                    while(!feof(archivocompleto)){ //Se calcula el número total de filas.
                         c=fgetc(archivocompleto);
                         if (c=='\n') n++;
                         }
                     rewind(archivocompleto);
-                    while(!feof(archivocompleto)){ //Se cuenta el numero de filas
+                    while(!feof(archivocompleto)){ //Se calcula el numero total de filas.
                         comas=fgetc(archivocompleto);
                         if (comas==',') ncomas++;
                         }
@@ -67,7 +67,7 @@ int main(){
                     fclose(archivocompleto);
             switch(eleccion){
                 case 1:
-                printf("\n\n\t1.\tVer datos completos.\n"); // comprobacion
+                printf("\n\n\t1.\tVisualizar todos los datos.\n"); // comprobacion
                 //copiarArchivoModificado(nombre_archivo_origen, nombre_archivo_destino);
                 mostrarDatosCompletos(nombre_archivo_destino);
                 //rewind(nombre_archivo_destino);
@@ -75,15 +75,15 @@ int main(){
                 break;
                 case 2:
                 while(eleccionbusqueda!=4){
-                    printf("Seleccione el tipo de busqueda que desea:\n");
+                    printf("Por favor, indique el número de busqueda que quiere.\n");
                     menubusqueda();
                     scanf("%i",&eleccionbusqueda);
                     switch(eleccionbusqueda){
                         case 1:
                             menubusquedafecha(nfilas,archivocompleto);
-                            printf("Indique el año: 21 o 22?\n");
+                            printf("Introduzca por teclado el año, ¿21 o 22?\n");
                             scanf("%i",&year);
-                            printf("Indique el mes: 1,2,3,...,12\n");
+                            printf("Introduzca por teclado el correspondiente:1,2,3,...,12\n");
                             scanf("%i",&mes);
                             if(year==22){
                                 operador1=12;
